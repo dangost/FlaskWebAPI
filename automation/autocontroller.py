@@ -38,36 +38,66 @@ base = [
 
 path = r"D:\Projects\Regula\Web\FlaskWebAPI\application\entities"
 
+import os
 for i in range(len(class_names)):
-    v = ""
-    for each in base[i]:
-        temppp = ""
-        if base[i].get(each) == "int":
-            temppp = "111"
-        else: temppp = '"string"'
-        v +="temp."+each+" = "+temppp+"\n"
+    folder_path = path + "\\" + list_names[i].lower()
 
-
-    new_path = path + "\\" + list_names[i].lower() + "\\model_test.py"
+    try:
+        os.mkdir(folder_path)
+    except BaseException:
+        pass
+    new_path = folder_path+"\\controller.py"
     file = open(new_path, 'w')
 
-    temp = '''from application.entities.'''+list_names[i].lower()+'''.model import '''+class_names[i]+'''
+    temp = '''from flask import request
+from flask_accepts import accepts, responds
+from flask_restx import Namespace, Resource
+from flask.wrappers import Response
+from typing import List
+
+from .schema import '''+class_names[i]+'''Schema
+from .service import '''+list_names[i]+'''Service
+from .model import '''+class_names[i]+'''
+from .interface import '''+class_names[i]+'''Interface
+
+api = Namespace("'''+class_names[i]+'''", description="Single namespace, single entity")
 
 
-def temp_'''+class_names[i].lower()+'''():
-    temp = '''+class_names[i]+'''()
-    #
-    #
-    return temp
+@api.route("/")
+class '''+class_names[i]+'''Resource(Resource):
 
-def test_load():
-    fetch = ()
-    obj = '''+class_names[i]+'''()
-    obj.load(fetch)
+    @responds(schema='''+class_names[i]+'''Schema(many=True))
+    def get(self) -> List['''+class_names[i]+''']:
 
-    return obj
+        return '''+list_names[i]+'''Service.get_all()
+
+    @accepts(schema='''+class_names[i]+'''Schema, api=api)
+    @responds(schema='''+class_names[i]+'''Schema)
+    def post(self) -> '''+class_names[i]+''':
+        obj: dict = request.parsed_obj
+        return '''+class_names[i]+'''Service.create(obj)
 
 
-assert test_load() == temp_'''+class_names[i].lower()+'''()
+@api.route("/<int:'''+class_names[i]+'''Id>")
+@api.param("'''+list_names[i]+'''Id", "'''+class_names[i]+''' database ID")
+class '''+class_names[i]+'''IdResource(Resource):
+    @responds(schema='''+class_names[i]+'''Schema)
+    def get(self, '''+id_names[i]+''': int) -> '''+id_names[i]+''':
+        return '''+list_names[i]+'''Service.get_by_id('''+list_names[i]+''')
+
+    def delete(self, '''+id_names[i]+''': int) -> Response:
+        from flask import jsonify
+
+        id: int = '''+list_names[i]+'''Service.delete_by_id('''+id_names[i]+''')
+        return jsonify(dict(status="Success", id=id))
+
+    @accepts(schema='''+class_names[i]+'''Schema, api=api)
+    @responds(schema='''+class_names[i]+'''Schema)
+    def put(self, '''+id_names[i]+''': int) -> '''+class_names[i]+''':
+
+        changes: '''+class_names[i]+'''Interface = request.parsed_obj
+        '''+class_names[i].lower()+''' = '''+list_names[i]+'''Service.get_by_id('''+list_names[i]+''')
+        return '''+list_names[i]+'''Service.update('''+class_names[i].lower()+''', changes)
+
 '''
     file.write(temp)

@@ -9,7 +9,7 @@ from .service import CountriesService
 from .model import Country
 from .interface import CountryInterface
 
-api = Namespace("Country", description="Single namespace, single entity")  # noqa
+api = Namespace("Country", description="Single namespace, single entity")
 
 
 @api.route("/")
@@ -24,15 +24,15 @@ class CountryResource(Resource):
     @responds(schema=CountrySchema)
     def post(self) -> Country:
         obj: dict = request.parsed_obj
-        return CountriesService.create(obj)
+        return CountryService.create(obj)
 
 
 @api.route("/<int:CountryId>")
-@api.param("CountryId", "Country database ID")
+@api.param("CountriesId", "Country database ID")
 class CountryIdResource(Resource):
     @responds(schema=CountrySchema)
-    def get(self, CountryId: int) -> Country:
-        return CountriesService.get_by_id(CountryId)
+    def get(self, CountryId: int) -> CountryId:
+        return CountriesService.get_by_id(Countries)
 
     def delete(self, CountryId: int) -> Response:
         from flask import jsonify
@@ -45,5 +45,6 @@ class CountryIdResource(Resource):
     def put(self, CountryId: int) -> Country:
 
         changes: CountryInterface = request.parsed_obj
-        country = CountriesService.get_by_id(CountryId)
+        country = CountriesService.get_by_id(Countries)
         return CountriesService.update(country, changes)
+
