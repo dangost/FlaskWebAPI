@@ -2,6 +2,8 @@ from marshmallow import fields, Schema
 
 
 class LocationSchema(Schema):
+    LocationId = fields.Integer(attribute="LocationId")
+
     CountryId = fields.Integer(attribute="CountryId")
 
     AddressLine1 = fields.String(attribute="AddressLine1")

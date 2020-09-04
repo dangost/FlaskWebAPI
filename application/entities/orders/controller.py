@@ -11,20 +11,21 @@ from .interface import OrdersInterface
 
 api = Namespace("Orders", description="Single namespace, single entity")
 
+service = OrdersService
 
 @api.route("/")
 class OrdersResource(Resource):
 
     @responds(schema=OrdersSchema(many=True))
     def get(self) -> List[Orders]:
-
-        return OrdersService.get_all()
+        
+        return service.get_all(self)
 
     @accepts(schema=OrdersSchema, api=api)
     @responds(schema=OrdersSchema)
     def post(self) -> Orders:
         obj: dict = request.parsed_obj
-        return OrdersService.create(obj)
+        return service.create(self, obj)
 
 
 @api.route("/<int:OrderId>")
@@ -32,12 +33,12 @@ class OrdersResource(Resource):
 class OrdersIdResource(Resource):
     @responds(schema=OrdersSchema)
     def get(self, OrderId: int) -> Orders:
-        return OrdersService.get_by_id(OrderId)
+        return service.get_by_id(self, OrderId)
 
     def delete(self, OrderId: int) -> Response:
         from flask import jsonify
 
-        id: int = OrdersService.delete_by_id(OrderId)
+        id: int = service.delete_by_id(self, OrderId)
         return jsonify(dict(status="Success", id=id))
 
     @accepts(schema=OrdersSchema, api=api)
@@ -45,6 +46,6 @@ class OrdersIdResource(Resource):
     def put(self, OrderId: int) -> Orders:
 
         changes: OrdersInterface = request.parsed_obj
-        orders = OrdersService.get_by_id(OrderId)
-        return OrdersService.update(orders, changes)
+        orders = service.get_by_id(self, OrderId)
+        return service.update(self, orders, changes)
 

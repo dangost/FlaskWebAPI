@@ -2,6 +2,8 @@ from marshmallow import fields, Schema
 
 
 class EmploymentSchema(Schema):
+    EmployeeId = fields.Integer(attribute="EmployeeId")
+
     PersonId = fields.Integer(attribute="PersonId")
 
     HRJobId = fields.Integer(attribute="HRJobId")

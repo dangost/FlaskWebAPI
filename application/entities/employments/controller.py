@@ -11,20 +11,21 @@ from .interface import EmploymentInterface
 
 api = Namespace("Employment", description="Single namespace, single entity")
 
+service = EmploymentsService
 
 @api.route("/")
 class EmploymentResource(Resource):
 
     @responds(schema=EmploymentSchema(many=True))
     def get(self) -> List[Employment]:
-
-        return EmploymentsService.get_all()
+        
+        return service.get_all(self)
 
     @accepts(schema=EmploymentSchema, api=api)
     @responds(schema=EmploymentSchema)
     def post(self) -> Employment:
         obj: dict = request.parsed_obj
-        return EmploymentsService.create(obj)
+        return service.create(self, obj)
 
 
 @api.route("/<int:EmployeeID>")
@@ -32,12 +33,12 @@ class EmploymentResource(Resource):
 class EmploymentIdResource(Resource):
     @responds(schema=EmploymentSchema)
     def get(self, EmployeeID: int) -> Employment:
-        return EmploymentsService.get_by_id(EmployeeID)
+        return service.get_by_id(self, EmployeeID)
 
     def delete(self, EmployeeID: int) -> Response:
         from flask import jsonify
 
-        id: int = EmploymentsService.delete_by_id(EmployeeID)
+        id: int = service.delete_by_id(self, EmployeeID)
         return jsonify(dict(status="Success", id=id))
 
     @accepts(schema=EmploymentSchema, api=api)
@@ -45,6 +46,6 @@ class EmploymentIdResource(Resource):
     def put(self, EmployeeID: int) -> Employment:
 
         changes: EmploymentInterface = request.parsed_obj
-        employment = EmploymentsService.get_by_id(EmployeeID)
-        return EmploymentsService.update(employment, changes)
+        employment = service.get_by_id(self, EmployeeID)
+        return service.update(self, employment, changes)
 

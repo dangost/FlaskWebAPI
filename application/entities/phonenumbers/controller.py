@@ -11,20 +11,21 @@ from .interface import PhoneNumberInterface
 
 api = Namespace("PhoneNumber", description="Single namespace, single entity")
 
+service = PhoneNumbersService
 
 @api.route("/")
 class PhoneNumberResource(Resource):
 
     @responds(schema=PhoneNumberSchema(many=True))
     def get(self) -> List[PhoneNumber]:
-
-        return PhoneNumbersService.get_all()
+        
+        return service.get_all(self)
 
     @accepts(schema=PhoneNumberSchema, api=api)
     @responds(schema=PhoneNumberSchema)
     def post(self) -> PhoneNumber:
         obj: dict = request.parsed_obj
-        return PhoneNumbersService.create(obj)
+        return service.create(self, obj)
 
 
 @api.route("/<int:PhoneNumberId>")
@@ -32,12 +33,12 @@ class PhoneNumberResource(Resource):
 class PhoneNumberIdResource(Resource):
     @responds(schema=PhoneNumberSchema)
     def get(self, PhoneNumberId: int) -> PhoneNumber:
-        return PhoneNumbersService.get_by_id(PhoneNumberId)
+        return service.get_by_id(self, PhoneNumberId)
 
     def delete(self, PhoneNumberId: int) -> Response:
         from flask import jsonify
 
-        id: int = PhoneNumbersService.delete_by_id(PhoneNumberId)
+        id: int = service.delete_by_id(self, PhoneNumberId)
         return jsonify(dict(status="Success", id=id))
 
     @accepts(schema=PhoneNumberSchema, api=api)
@@ -45,6 +46,6 @@ class PhoneNumberIdResource(Resource):
     def put(self, PhoneNumberId: int) -> PhoneNumber:
 
         changes: PhoneNumberInterface = request.parsed_obj
-        phonenumber = PhoneNumbersService.get_by_id(PhoneNumberId)
-        return PhoneNumbersService.update(phonenumber, changes)
+        phonenumber = service.get_by_id(self, PhoneNumberId)
+        return service.update(self, phonenumber, changes)
 

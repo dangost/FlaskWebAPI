@@ -11,20 +11,21 @@ from .interface import PersonLocationInterface
 
 api = Namespace("PersonLocation", description="Single namespace, single entity")
 
+service = PersonLocationsService
 
 @api.route("/")
 class PersonLocationResource(Resource):
 
     @responds(schema=PersonLocationSchema(many=True))
     def get(self) -> List[PersonLocation]:
-
-        return PersonLocationsService.get_all()
+        
+        return service.get_all(self)
 
     @accepts(schema=PersonLocationSchema, api=api)
     @responds(schema=PersonLocationSchema)
     def post(self) -> PersonLocation:
         obj: dict = request.parsed_obj
-        return PersonLocationsService.create(obj)
+        return service.create(self, obj)
 
 
 @api.route("/<int:PeoplePersonId>")
@@ -32,12 +33,12 @@ class PersonLocationResource(Resource):
 class PersonLocationIdResource(Resource):
     @responds(schema=PersonLocationSchema)
     def get(self, PeoplePersonId: int) -> PersonLocation:
-        return PersonLocationsService.get_by_id(PeoplePersonId)
+        return service.get_by_id(self, PeoplePersonId)
 
     def delete(self, PeoplePersonId: int) -> Response:
         from flask import jsonify
 
-        id: int = PersonLocationsService.delete_by_id(PeoplePersonId)
+        id: int = service.delete_by_id(self, PeoplePersonId)
         return jsonify(dict(status="Success", id=id))
 
     @accepts(schema=PersonLocationSchema, api=api)
@@ -45,6 +46,6 @@ class PersonLocationIdResource(Resource):
     def put(self, PeoplePersonId: int) -> PersonLocation:
 
         changes: PersonLocationInterface = request.parsed_obj
-        personlocation = PersonLocationsService.get_by_id(PeoplePersonId)
-        return PersonLocationsService.update(personlocation, changes)
+        personlocation = service.get_by_id(self, PeoplePersonId)
+        return service.update(self, personlocation, changes)
 

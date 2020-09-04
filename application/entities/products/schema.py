@@ -2,6 +2,8 @@ from marshmallow import fields, Schema
 
 
 class ProductSchema(Schema):
+    ProductId = fields.Integer(attribute="ProductId")
+
     ProductName = fields.String(attribute="ProductName")
 
     Description = fields.String(attribute="Description")

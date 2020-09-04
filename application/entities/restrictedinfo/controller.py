@@ -11,20 +11,21 @@ from .interface import RestrictedInfoInterface
 
 api = Namespace("RestrictedInfo", description="Single namespace, single entity")
 
+service = RestrictedInfoService
 
 @api.route("/")
 class RestrictedInfoResource(Resource):
 
     @responds(schema=RestrictedInfoSchema(many=True))
     def get(self) -> List[RestrictedInfo]:
-
-        return RestrictedInfoService.get_all()
+        
+        return service.get_all(self)
 
     @accepts(schema=RestrictedInfoSchema, api=api)
     @responds(schema=RestrictedInfoSchema)
     def post(self) -> RestrictedInfo:
         obj: dict = request.parsed_obj
-        return RestrictedInfoService.create(obj)
+        return service.create(self, obj)
 
 
 @api.route("/<int:PersonId>")
@@ -32,12 +33,12 @@ class RestrictedInfoResource(Resource):
 class RestrictedInfoIdResource(Resource):
     @responds(schema=RestrictedInfoSchema)
     def get(self, PersonId: int) -> RestrictedInfo:
-        return RestrictedInfoService.get_by_id(PersonId)
+        return service.get_by_id(self, PersonId)
 
     def delete(self, PersonId: int) -> Response:
         from flask import jsonify
 
-        id: int = RestrictedInfoService.delete_by_id(PersonId)
+        id: int = service.delete_by_id(self, PersonId)
         return jsonify(dict(status="Success", id=id))
 
     @accepts(schema=RestrictedInfoSchema, api=api)
@@ -45,6 +46,6 @@ class RestrictedInfoIdResource(Resource):
     def put(self, PersonId: int) -> RestrictedInfo:
 
         changes: RestrictedInfoInterface = request.parsed_obj
-        restrictedinfo = RestrictedInfoService.get_by_id(PersonId)
-        return RestrictedInfoService.update(restrictedinfo, changes)
+        restrictedinfo = service.get_by_id(self, PersonId)
+        return service.update(self, restrictedinfo, changes)
 

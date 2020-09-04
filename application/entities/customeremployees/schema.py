@@ -2,6 +2,8 @@ from marshmallow import fields, Schema
 
 
 class CustomerEmployeeSchema(Schema):
+    CustomerEmployeeId = fields.Integer(attribute="CustomerEmployeeId")
+
     CompanyId = fields.Integer(attribute="CompanyId")
 
     BadgeNumber = fields.String(attribute="BadgeNumber")

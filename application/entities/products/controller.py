@@ -11,20 +11,21 @@ from .interface import ProductInterface
 
 api = Namespace("Product", description="Single namespace, single entity")
 
+service = ProductsService
 
 @api.route("/")
 class ProductResource(Resource):
 
     @responds(schema=ProductSchema(many=True))
     def get(self) -> List[Product]:
-
-        return ProductsService.get_all()
+        
+        return service.get_all(self)
 
     @accepts(schema=ProductSchema, api=api)
     @responds(schema=ProductSchema)
     def post(self) -> Product:
         obj: dict = request.parsed_obj
-        return ProductsService.create(obj)
+        return service.create(self, obj)
 
 
 @api.route("/<int:ProductId>")
@@ -32,12 +33,12 @@ class ProductResource(Resource):
 class ProductIdResource(Resource):
     @responds(schema=ProductSchema)
     def get(self, ProductId: int) -> Product:
-        return ProductsService.get_by_id(ProductId)
+        return service.get_by_id(self, ProductId)
 
     def delete(self, ProductId: int) -> Response:
         from flask import jsonify
 
-        id: int = ProductsService.delete_by_id(ProductId)
+        id: int = service.delete_by_id(self, ProductId)
         return jsonify(dict(status="Success", id=id))
 
     @accepts(schema=ProductSchema, api=api)
@@ -45,6 +46,6 @@ class ProductIdResource(Resource):
     def put(self, ProductId: int) -> Product:
 
         changes: ProductInterface = request.parsed_obj
-        product = ProductsService.get_by_id(ProductId)
-        return ProductsService.update(product, changes)
+        product = service.get_by_id(self, ProductId)
+        return service.update(self, product, changes)
 

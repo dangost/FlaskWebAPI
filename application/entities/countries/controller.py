@@ -11,20 +11,21 @@ from .interface import CountryInterface
 
 api = Namespace("Country", description="Single namespace, single entity")
 
+service = CountriesService
 
 @api.route("/")
 class CountryResource(Resource):
 
     @responds(schema=CountrySchema(many=True))
     def get(self) -> List[Country]:
-
-        return CountriesService.get_all()
+        
+        return service.get_all(self)
 
     @accepts(schema=CountrySchema, api=api)
     @responds(schema=CountrySchema)
     def post(self) -> Country:
         obj: dict = request.parsed_obj
-        return CountriesService.create(obj)
+        return service.create(self, obj)
 
 
 @api.route("/<int:CountryId>")
@@ -32,12 +33,12 @@ class CountryResource(Resource):
 class CountryIdResource(Resource):
     @responds(schema=CountrySchema)
     def get(self, CountryId: int) -> Country:
-        return CountriesService.get_by_id(CountryId)
+        return service.get_by_id(self, CountryId)
 
     def delete(self, CountryId: int) -> Response:
         from flask import jsonify
 
-        id: int = CountriesService.delete_by_id(CountryId)
+        id: int = service.delete_by_id(self, CountryId)
         return jsonify(dict(status="Success", id=id))
 
     @accepts(schema=CountrySchema, api=api)
@@ -45,6 +46,6 @@ class CountryIdResource(Resource):
     def put(self, CountryId: int) -> Country:
 
         changes: CountryInterface = request.parsed_obj
-        country = CountriesService.get_by_id(CountryId)
-        return CountriesService.update(country, changes)
+        country = service.get_by_id(self, CountryId)
+        return service.update(self, country, changes)
 

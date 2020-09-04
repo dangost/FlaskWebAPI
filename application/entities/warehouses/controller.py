@@ -11,20 +11,21 @@ from .interface import WarehouseInterface
 
 api = Namespace("Warehouse", description="Single namespace, single entity")
 
+service = WarehousesService
 
 @api.route("/")
 class WarehouseResource(Resource):
 
     @responds(schema=WarehouseSchema(many=True))
     def get(self) -> List[Warehouse]:
-
-        return WarehousesService.get_all()
+        
+        return service.get_all(self)
 
     @accepts(schema=WarehouseSchema, api=api)
     @responds(schema=WarehouseSchema)
     def post(self) -> Warehouse:
         obj: dict = request.parsed_obj
-        return WarehousesService.create(obj)
+        return service.create(self, obj)
 
 
 @api.route("/<int:WarehouseId>")
@@ -32,12 +33,12 @@ class WarehouseResource(Resource):
 class WarehouseIdResource(Resource):
     @responds(schema=WarehouseSchema)
     def get(self, WarehouseId: int) -> Warehouse:
-        return WarehousesService.get_by_id(WarehouseId)
+        return service.get_by_id(self, WarehouseId)
 
     def delete(self, WarehouseId: int) -> Response:
         from flask import jsonify
 
-        id: int = WarehousesService.delete_by_id(WarehouseId)
+        id: int = service.delete_by_id(self, WarehouseId)
         return jsonify(dict(status="Success", id=id))
 
     @accepts(schema=WarehouseSchema, api=api)
@@ -45,6 +46,6 @@ class WarehouseIdResource(Resource):
     def put(self, WarehouseId: int) -> Warehouse:
 
         changes: WarehouseInterface = request.parsed_obj
-        warehouse = WarehousesService.get_by_id(WarehouseId)
-        return WarehousesService.update(warehouse, changes)
+        warehouse = service.get_by_id(self, WarehouseId)
+        return service.update(self, warehouse, changes)
 

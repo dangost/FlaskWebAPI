@@ -61,20 +61,21 @@ from .interface import '''+class_names[i]+'''Interface
 
 api = Namespace("'''+class_names[i]+'''", description="Single namespace, single entity")
 
+service = '''+list_names[i]+'''Service
 
 @api.route("/")
 class '''+class_names[i]+'''Resource(Resource):
 
     @responds(schema='''+class_names[i]+'''Schema(many=True))
     def get(self) -> List['''+class_names[i]+''']:
-
-        return '''+list_names[i]+'''Service.get_all()
+        
+        return service.get_all(self)
 
     @accepts(schema='''+class_names[i]+'''Schema, api=api)
     @responds(schema='''+class_names[i]+'''Schema)
     def post(self) -> '''+class_names[i]+''':
         obj: dict = request.parsed_obj
-        return '''+list_names[i]+'''Service.create(obj)
+        return service.create(self, obj)
 
 
 @api.route("/<int:'''+id_names[i]+'''>")
@@ -82,12 +83,12 @@ class '''+class_names[i]+'''Resource(Resource):
 class '''+class_names[i]+'''IdResource(Resource):
     @responds(schema='''+class_names[i]+'''Schema)
     def get(self, '''+id_names[i]+''': int) -> '''+class_names[i]+''':
-        return '''+list_names[i]+'''Service.get_by_id('''+id_names[i]+''')
+        return service.get_by_id(self, '''+id_names[i]+''')
 
     def delete(self, '''+id_names[i]+''': int) -> Response:
         from flask import jsonify
 
-        id: int = '''+list_names[i]+'''Service.delete_by_id('''+id_names[i]+''')
+        id: int = service.delete_by_id(self, '''+id_names[i]+''')
         return jsonify(dict(status="Success", id=id))
 
     @accepts(schema='''+class_names[i]+'''Schema, api=api)
@@ -95,8 +96,8 @@ class '''+class_names[i]+'''IdResource(Resource):
     def put(self, '''+id_names[i]+''': int) -> '''+class_names[i]+''':
 
         changes: '''+class_names[i]+'''Interface = request.parsed_obj
-        '''+class_names[i].lower()+''' = '''+list_names[i]+'''Service.get_by_id('''+id_names[i]+''')
-        return '''+list_names[i]+'''Service.update('''+class_names[i].lower()+''', changes)
+        '''+class_names[i].lower()+''' = service.get_by_id(self, '''+id_names[i]+''')
+        return service.update(self, '''+class_names[i].lower()+''', changes)
 
 '''
     file.write(temp)

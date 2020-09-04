@@ -2,7 +2,7 @@ from marshmallow import fields, Schema
 
 
 class PersonLocationSchema(Schema):
-    PeoplePersonId = fields.Integer(attribute="PeoplePersonId")
+    PersonsPersonId = fields.Integer(attribute="PersonsPersonId")
 
     LocationsLocationsId = fields.Integer(attribute="LocationsLocationsId")
 

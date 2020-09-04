@@ -11,20 +11,21 @@ from .interface import CustomerInterface
 
 api = Namespace("Customer", description="Single namespace, single entity")
 
+service = CustomersService
 
 @api.route("/")
 class CustomerResource(Resource):
 
     @responds(schema=CustomerSchema(many=True))
     def get(self) -> List[Customer]:
-
-        return CustomersService.get_all()
+        
+        return service.get_all(self)
 
     @accepts(schema=CustomerSchema, api=api)
     @responds(schema=CustomerSchema)
     def post(self) -> Customer:
         obj: dict = request.parsed_obj
-        return CustomersService.create(obj)
+        return service.create(self, obj)
 
 
 @api.route("/<int:CustomerId>")
@@ -32,12 +33,12 @@ class CustomerResource(Resource):
 class CustomerIdResource(Resource):
     @responds(schema=CustomerSchema)
     def get(self, CustomerId: int) -> Customer:
-        return CustomersService.get_by_id(CustomerId)
+        return service.get_by_id(self, CustomerId)
 
     def delete(self, CustomerId: int) -> Response:
         from flask import jsonify
 
-        id: int = CustomersService.delete_by_id(CustomerId)
+        id: int = service.delete_by_id(self, CustomerId)
         return jsonify(dict(status="Success", id=id))
 
     @accepts(schema=CustomerSchema, api=api)
@@ -45,6 +46,6 @@ class CustomerIdResource(Resource):
     def put(self, CustomerId: int) -> Customer:
 
         changes: CustomerInterface = request.parsed_obj
-        customer = CustomersService.get_by_id(CustomerId)
-        return CustomersService.update(customer, changes)
+        customer = service.get_by_id(self, CustomerId)
+        return service.update(self, customer, changes)
 
