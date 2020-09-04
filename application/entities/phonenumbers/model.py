@@ -7,11 +7,12 @@ class PhoneNumber(db.Model):
 
     __tablename__ = "PhoneNumbers"
 
-    PeoplePersonId = Column(String(255))
-    LocationLocationId = Column(String(255))
-    Phonenumber = Column(String(255))
-    CountryCode = Column(String(255))
-    PhoneType = Column(String(255))
+    PhoneNumberId = Column(Integer(), primary_key=True)
+    PeoplePersonId = Column(Integer(), ForeignKey("People.PersonId"))
+    LocationLocationId = Column(Integer(), ForeignKey("Locations.LocationId"))
+    PhoneNumber = Column(Integer())
+    CountryCode = Column(Integer())
+    PhoneType = Column(Integer())
 
 
     def update(self, changes: PhoneNumberInterface):

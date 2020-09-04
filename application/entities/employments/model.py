@@ -7,14 +7,15 @@ class Employment(db.Model):
 
     __tablename__ = "Employments"
 
-    PersonId = Column(String(255))
-    HRJobId = Column(String(255))
-    ManagerEmployeeId = Column(String(255))
-    StartDate = Column(Integer())
-    EndDate = Column(Integer())
-    Salary = Column(Integer())
-    CommissionPercent = Column(String(255))
-    Employmentcol = Column(Integer())
+    EmployeeId = Column(Integer(), primary_key=True)
+    PersonId = Column(Integer(), ForeignKey("People.PersonId"))
+    HRJobId = Column(Integer(), ForeignKey("EmploymentJobs.HRJobId"))
+    ManagerEmployeeId = Column(Integer())
+    StartDate = Column(String(255))
+    EndDate = Column(String(255))
+    Salary = Column(String(255))
+    CommissionPercent = Column(Integer())
+    EmploymentCol = Column(String(255))
 
 
     def update(self, changes: EmploymentInterface):

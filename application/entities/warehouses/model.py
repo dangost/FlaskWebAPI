@@ -7,8 +7,9 @@ class Warehouse(db.Model):
 
     __tablename__ = "Warehouses"
 
-    LocationId = Column(String(255))
-    WarehouseName = Column(Integer())
+    WarehouseId = Column(Integer(), ForeignKey("Inventories.WarehouseId"), primary_key=True)
+    LocationId = Column(Integer(), ForeignKey("Locations.LocationId"))
+    WarehouseName = Column(String(255))
 
 
     def update(self, changes: WarehouseInterface):

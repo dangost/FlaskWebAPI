@@ -2,6 +2,8 @@ from marshmallow import fields, Schema
 
 
 class RestrictedInfoSchema(Schema):
+    PersonId = fields.Integer(attribute="PersonId")
+
     DateOfBirth = fields.String(attribute="DateOfBirth")
 
     DateOfDeath = fields.String(attribute="DateOfDeath")

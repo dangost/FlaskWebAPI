@@ -2,6 +2,8 @@ from mypy_extensions import TypedDict
 
 
 class EmploymentInterface(TypedDict, total=False):
+    EmployeeId: int
+
     PersonId: int
 
     HRJobId: int
@@ -16,7 +18,7 @@ class EmploymentInterface(TypedDict, total=False):
 
     CommissionPercent: int
 
-    Employmentcol: str
+    EmploymentCol: str
 
 
 

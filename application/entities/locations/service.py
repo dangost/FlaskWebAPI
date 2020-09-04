@@ -30,7 +30,7 @@ class LocationsService:
 
     @staticmethod
     def create(new_attrs: LocationInterface) -> Location:
-        new_location = Location(CountryId=new_attrs["CountryId"],  AdressLine1=new_attrs["AdressLine1"],  AdressLine2=new_attrs["AdressLine2"],  City=new_attrs["City"],  State=new_attrs["State"],  District=new_attrs["District"],  PostalCode=new_attrs["PostalCode"],  LocationTypeCode=new_attrs["LocationTypeCode"],  Description=new_attrs["Description"],  ShippingNotes=new_attrs["ShippingNotes"],  CountriesCountryId=new_attrs["CountriesCountryId"])
+        new_location = Location(CountryId=new_attrs["CountryId"],  AddressLine1=new_attrs["AddressLine1"],  AddressLine2=new_attrs["AddressLine2"],  City=new_attrs["City"],  State=new_attrs["State"],  District=new_attrs["District"],  PostalCode=new_attrs["PostalCode"],  LocationTypeCode=new_attrs["LocationTypeCode"],  Description=new_attrs["Description"],  ShippingNotes=new_attrs["ShippingNotes"],  CountriesCountryId=new_attrs["CountriesCountryId"])
         db.session.add(new_location)
         db.session.commit()
 

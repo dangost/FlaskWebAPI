@@ -10,7 +10,7 @@ class ProductSchema(Schema):
 
     WeightClass = fields.String(attribute="WeightClass")
 
-    WarrantlyPeriod = fields.Integer(attribute="WarrantlyPeriod")
+    WarrantyPeriod = fields.Integer(attribute="WarrantyPeriod")
 
     SupplierId = fields.Integer(attribute="SupplierId")
 

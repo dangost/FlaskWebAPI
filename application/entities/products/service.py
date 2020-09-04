@@ -30,7 +30,7 @@ class ProductsService:
 
     @staticmethod
     def create(new_attrs: ProductInterface) -> Product:
-        new_product = Product(ProductName=new_attrs["ProductName"],  Description=new_attrs["Description"],  Category=new_attrs["Category"],  WeightClass=new_attrs["WeightClass"],  WarrantlyPeriod=new_attrs["WarrantlyPeriod"],  SupplierId=new_attrs["SupplierId"],  Status=new_attrs["Status"],  ListPrice=new_attrs["ListPrice"],  MinimumPrice=new_attrs["MinimumPrice"],  PriceCurrency=new_attrs["PriceCurrency"],  CatalogURL=new_attrs["CatalogURL"])
+        new_product = Product(ProductName=new_attrs["ProductName"],  Description=new_attrs["Description"],  Category=new_attrs["Category"],  WeightClass=new_attrs["WeightClass"],  WarrantyPeriod=new_attrs["WarrantyPeriod"],  SupplierId=new_attrs["SupplierId"],  Status=new_attrs["Status"],  ListPrice=new_attrs["ListPrice"],  MinimumPrice=new_attrs["MinimumPrice"],  PriceCurrency=new_attrs["PriceCurrency"],  CatalogURL=new_attrs["CatalogURL"])
         db.session.add(new_product)
         db.session.commit()
 

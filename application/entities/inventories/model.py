@@ -7,10 +7,11 @@ class Inventory(db.Model):
 
     __tablename__ = "Inventories"
 
-    ProductId = Column(String(255))
-    WarehouseId = Column(String(255))
-    QuantityOnHand = Column(String(255))
-    QuantityAvaileble = Column(String(255))
+    InventoryId = Column(Integer(), primary_key=True)
+    ProductId = Column(Integer(), ForeignKey("Products.ProductId"))
+    WarehouseId = Column(Integer())
+    QuantityOnHand = Column(Integer())
+    QuantityAvailable = Column(Integer())
 
 
     def update(self, changes: InventoryInterface):

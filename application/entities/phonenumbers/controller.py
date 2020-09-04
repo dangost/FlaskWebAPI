@@ -24,7 +24,7 @@ class PhoneNumberResource(Resource):
     @responds(schema=PhoneNumberSchema)
     def post(self) -> PhoneNumber:
         obj: dict = request.parsed_obj
-        return PhoneNumberService.create(obj)
+        return PhoneNumbersService.create(obj)
 
 
 @api.route("/<int:PhoneNumberId>")
@@ -45,6 +45,6 @@ class PhoneNumberIdResource(Resource):
     def put(self, PhoneNumberId: int) -> PhoneNumber:
 
         changes: PhoneNumberInterface = request.parsed_obj
-        phonenumber = PhoneNumbersService.get_by_id(PhoneNumbers)
+        phonenumber = PhoneNumbersService.get_by_id(PhoneNumberId)
         return PhoneNumbersService.update(phonenumber, changes)
 

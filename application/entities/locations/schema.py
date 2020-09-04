@@ -4,9 +4,9 @@ from marshmallow import fields, Schema
 class LocationSchema(Schema):
     CountryId = fields.Integer(attribute="CountryId")
 
-    AdressLine1 = fields.String(attribute="AdressLine1")
+    AddressLine1 = fields.String(attribute="AddressLine1")
 
-    AdressLine2 = fields.String(attribute="AdressLine2")
+    AddressLine2 = fields.String(attribute="AddressLine2")
 
     City = fields.String(attribute="City")
 

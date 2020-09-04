@@ -6,7 +6,7 @@ class PhoneNumberSchema(Schema):
 
     LocationLocationId = fields.Integer(attribute="LocationLocationId")
 
-    Phonenumber = fields.Integer(attribute="Phonenumber")
+    PhoneNumber = fields.Integer(attribute="PhoneNumber")
 
     CountryCode = fields.Integer(attribute="CountryCode")
 

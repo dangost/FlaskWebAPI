@@ -7,13 +7,14 @@ class Person(db.Model):
 
     __tablename__ = "People"
 
-    FirstName = Column(Integer())
-    LastName = Column(Integer())
-    MiddleName = Column(Integer())
-    Nickname = Column(Integer())
-    NatLangCode = Column(String(255))
-    CultureCode = Column(String(255))
-    Gender = Column(Integer())
+    PersonId = Column(Integer(), primary_key=True)
+    FirstName = Column(String(255))
+    LastName = Column(String(255))
+    MiddleName = Column(String(255))
+    Nickname = Column(String(255))
+    NatLangCode = Column(Integer())
+    CultureCode = Column(Integer())
+    Gender = Column(String(255))
 
 
     def update(self, changes: PersonInterface):

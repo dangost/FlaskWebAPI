@@ -35,34 +35,14 @@ base = [
     {"WarehouseId": "int", "LocationId": "int", "WarehouseName": "string"}
 ]
 
-path = r"D:\Projects\Regula\Web\FlaskWebAPI\application\entities"
-
+path = r"C:\Users\danil\Desktop\111\ttt.txt"
+t = ""
 import os
 for i in range(len(class_names)):
+    t += "    from application.entities."+list_names[i].lower()+" import register_routes as attach_"+list_names[i].lower()+"\n"
+t+= "\n\n\n"
+for i in range(len(class_names)):
+    t += "    attach_"+list_names[i].lower()+"(api, api)\n"
 
-    t = ""
-    for each in base[i]:
-        var = ""
-        if base[i].get(each) == "int":
-            var = "Integer"
-        else: var = "String"
-        t += "    " + each + " = fields." + var + "(attribute=\""+each+"\")\n\n"
-
-    '''CountryName = fields.String(attribute="CountryName")'''
-    folder_path = path + "\\" + list_names[i].lower()
-
-    try:
-        os.mkdir(folder_path)
-    except BaseException:
-        pass
-    new_path = folder_path+"\\schema.py"
-    file = open(new_path, 'w')
-
-    temp = '''from marshmallow import fields, Schema
-
-
-class '''+class_names[i]+'''Schema(Schema):
-'''+t+'''
-
-'''
-    file.write(temp)
+f = open(path, 'w')
+f.write(t)

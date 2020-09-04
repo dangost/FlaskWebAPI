@@ -8,7 +8,7 @@ class InventorySchema(Schema):
 
     QuantityOnHand = fields.Integer(attribute="QuantityOnHand")
 
-    QuantityAvaileble = fields.Integer(attribute="QuantityAvaileble")
+    QuantityAvailable = fields.Integer(attribute="QuantityAvailable")
 
 
 

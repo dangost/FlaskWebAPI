@@ -2,11 +2,13 @@ from mypy_extensions import TypedDict
 
 
 class PhoneNumberInterface(TypedDict, total=False):
+    PhoneNumberId: int
+
     PeoplePersonId: int
 
     LocationLocationId: int
 
-    Phonenumber: int
+    PhoneNumber: int
 
     CountryCode: int
 

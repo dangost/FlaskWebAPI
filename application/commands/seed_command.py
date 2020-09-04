@@ -6,7 +6,7 @@ from application.entities.countries import Country
 
 
 def seed_things():
-    classes = [Country]
+    classes = []
     for klass in classes:
         seed_thing(klass)
 

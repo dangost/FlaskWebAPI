@@ -2,9 +2,11 @@ from marshmallow import fields, Schema
 
 
 class PersonLocationSchema(Schema):
+    PeoplePersonId = fields.Integer(attribute="PeoplePersonId")
+
     LocationsLocationsId = fields.Integer(attribute="LocationsLocationsId")
 
-    SubAdress = fields.String(attribute="SubAdress")
+    SubAddress = fields.String(attribute="SubAddress")
 
     LocationUsage = fields.String(attribute="LocationUsage")
 

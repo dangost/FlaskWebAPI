@@ -7,10 +7,11 @@ class EmploymentJobs(db.Model):
 
     __tablename__ = "EmploymentJobs"
 
-    CountriesCountryId = Column(String(255))
-    JobTitle = Column(Integer())
-    MinSalary = Column(String(255))
-    MaxSalary = Column(String(255))
+    HRJobId = Column(Integer(), primary_key=True)
+    CountriesCountryId = Column(Integer(), ForeignKey("Countries.CountryId"))
+    JobTitle = Column(String(255))
+    MinSalary = Column(Integer())
+    MaxSalary = Column(Integer())
 
 
     def update(self, changes: EmploymentJobsInterface):

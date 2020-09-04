@@ -24,7 +24,7 @@ class EmploymentResource(Resource):
     @responds(schema=EmploymentSchema)
     def post(self) -> Employment:
         obj: dict = request.parsed_obj
-        return EmploymentService.create(obj)
+        return EmploymentsService.create(obj)
 
 
 @api.route("/<int:EmployeeID>")
@@ -45,6 +45,6 @@ class EmploymentIdResource(Resource):
     def put(self, EmployeeID: int) -> Employment:
 
         changes: EmploymentInterface = request.parsed_obj
-        employment = EmploymentsService.get_by_id(Employments)
+        employment = EmploymentsService.get_by_id(EmployeeID)
         return EmploymentsService.update(employment, changes)
 

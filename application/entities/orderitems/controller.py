@@ -24,7 +24,7 @@ class OrderItemResource(Resource):
     @responds(schema=OrderItemSchema)
     def post(self) -> OrderItem:
         obj: dict = request.parsed_obj
-        return OrderItemService.create(obj)
+        return OrderItemsService.create(obj)
 
 
 @api.route("/<int:OrderItemId>")
@@ -45,6 +45,6 @@ class OrderItemIdResource(Resource):
     def put(self, OrderItemId: int) -> OrderItem:
 
         changes: OrderItemInterface = request.parsed_obj
-        orderitem = OrderItemsService.get_by_id(OrderItems)
+        orderitem = OrderItemsService.get_by_id(OrderItemId)
         return OrderItemsService.update(orderitem, changes)
 

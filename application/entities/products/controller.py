@@ -24,7 +24,7 @@ class ProductResource(Resource):
     @responds(schema=ProductSchema)
     def post(self) -> Product:
         obj: dict = request.parsed_obj
-        return ProductService.create(obj)
+        return ProductsService.create(obj)
 
 
 @api.route("/<int:ProductId>")
@@ -45,6 +45,6 @@ class ProductIdResource(Resource):
     def put(self, ProductId: int) -> Product:
 
         changes: ProductInterface = request.parsed_obj
-        product = ProductsService.get_by_id(Products)
+        product = ProductsService.get_by_id(ProductId)
         return ProductsService.update(product, changes)
 

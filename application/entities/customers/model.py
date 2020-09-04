@@ -7,10 +7,11 @@ class Customer(db.Model):
 
     __tablename__ = "Customers"
 
-    PersonId = Column(String(255))
-    CustomEmployeeId = Column(String(255))
-    AccountMgrId = Column(String(255))
-    IncomeLevel = Column(String(255))
+    CustomerId = Column(Integer(), ForeignKey("Orders.CustomerId"), primary_key=True)
+    PersonId = Column(Integer(), ForeignKey("People.PersonId"))
+    CustomEmployeeId = Column(Integer(), ForeignKey("CustomerEmployees.CustomerEmployeeId"))
+    AccountMgrId = Column(Integer())
+    IncomeLevel = Column(Integer())
 
 
     def update(self, changes: CustomerInterface):

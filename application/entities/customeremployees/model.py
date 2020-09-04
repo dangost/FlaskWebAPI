@@ -7,12 +7,13 @@ class CustomerEmployee(db.Model):
 
     __tablename__ = "CustomerEmployees"
 
-    CompanyId = Column(String(255))
-    BadgeNumber = Column(Integer())
-    JobTitle = Column(Integer())
-    Department = Column(Integer())
-    CreditLimit = Column(String(255))
-    CreditLimitCurrency = Column(String(255))
+    CustomerEmployeeId = Column(Integer(), primary_key= True)
+    CompanyId = Column(Integer(), ForeignKey('CustomerCompanies.CompanyId'))
+    BadgeNumber = Column(String(255))
+    JobTitle = Column(String(255))
+    Department = Column(String(255))
+    CreditLimit = Column(Integer())
+    CreditLimitCurrency = Column(Integer())
 
 
     def update(self, changes: CustomerEmployeeInterface):

@@ -24,7 +24,7 @@ class InventoryResource(Resource):
     @responds(schema=InventorySchema)
     def post(self) -> Inventory:
         obj: dict = request.parsed_obj
-        return InventoryService.create(obj)
+        return InventoriesService.create(obj)
 
 
 @api.route("/<int:InventoryId>")
@@ -45,6 +45,6 @@ class InventoryIdResource(Resource):
     def put(self, InventoryId: int) -> Inventory:
 
         changes: InventoryInterface = request.parsed_obj
-        inventory = InventoriesService.get_by_id(Inventories)
+        inventory = InventoriesService.get_by_id(InventoryId)
         return InventoriesService.update(inventory, changes)
 

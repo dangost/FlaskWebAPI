@@ -24,7 +24,7 @@ class CustomerResource(Resource):
     @responds(schema=CustomerSchema)
     def post(self) -> Customer:
         obj: dict = request.parsed_obj
-        return CustomerService.create(obj)
+        return CustomersService.create(obj)
 
 
 @api.route("/<int:CustomerId>")
@@ -45,6 +45,6 @@ class CustomerIdResource(Resource):
     def put(self, CustomerId: int) -> Customer:
 
         changes: CustomerInterface = request.parsed_obj
-        customer = CustomersService.get_by_id(Customers)
+        customer = CustomersService.get_by_id(CustomerId)
         return CustomersService.update(customer, changes)
 

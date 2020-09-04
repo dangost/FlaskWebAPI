@@ -24,7 +24,7 @@ class PersonResource(Resource):
     @responds(schema=PersonSchema)
     def post(self) -> Person:
         obj: dict = request.parsed_obj
-        return PersonService.create(obj)
+        return PeopleService.create(obj)
 
 
 @api.route("/<int:Id>")
@@ -45,6 +45,6 @@ class PersonIdResource(Resource):
     def put(self, Id: int) -> Person:
 
         changes: PersonInterface = request.parsed_obj
-        person = PeopleService.get_by_id(People)
+        person = PeopleService.get_by_id(Id)
         return PeopleService.update(person, changes)
 

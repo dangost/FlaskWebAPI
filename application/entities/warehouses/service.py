@@ -30,7 +30,7 @@ class WarehousesService:
 
     @staticmethod
     def create(new_attrs: WarehouseInterface) -> Warehouse:
-        new_warehouse = Warehouse(LocationId=new_attrs["LocationId"],  WarehouseName=new_attrs["WarehouseName"])
+        new_warehouse = Warehouse(WarehouseId=new_attrs["WarehouseId"],  LocationId=new_attrs["LocationId"],  WarehouseName=new_attrs["WarehouseName"])
         db.session.add(new_warehouse)
         db.session.commit()
 

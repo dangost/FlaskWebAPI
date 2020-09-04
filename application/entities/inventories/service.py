@@ -30,7 +30,7 @@ class InventoriesService:
 
     @staticmethod
     def create(new_attrs: InventoryInterface) -> Inventory:
-        new_inventory = Inventory(ProductId=new_attrs["ProductId"],  WarehouseId=new_attrs["WarehouseId"],  QuantityOnHand=new_attrs["QuantityOnHand"],  QuantityAvaileble=new_attrs["QuantityAvaileble"])
+        new_inventory = Inventory(ProductId=new_attrs["ProductId"],  WarehouseId=new_attrs["WarehouseId"],  QuantityOnHand=new_attrs["QuantityOnHand"],  QuantityAvailable=new_attrs["QuantityAvailable"])
         db.session.add(new_inventory)
         db.session.commit()
 

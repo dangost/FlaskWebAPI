@@ -21,7 +21,7 @@ class RestrictedInfoService:
 
     @staticmethod
     def delete_by_id(restrictedinfo_id: int) -> List[int]:
-        restrictedinfo = RestrictedInfo.query.filter(RestrictedInfo. == restrictedinfo_id).first()
+        restrictedinfo = RestrictedInfo.query.filter(RestrictedInfo.PersonId == restrictedinfo_id).first()
         if not restrictedinfo:
             return []
         db.session.delete(restrictedinfo)
@@ -30,7 +30,7 @@ class RestrictedInfoService:
 
     @staticmethod
     def create(new_attrs: RestrictedInfoInterface) -> RestrictedInfo:
-        new_restrictedinfo = RestrictedInfo(DateOfBirth=new_attrs["DateOfBirth"],  DateOfDeath=new_attrs["DateOfDeath"],  GovernmentId=new_attrs["GovernmentId"],  PassportId=new_attrs["PassportId"],  HireDire=new_attrs["HireDire"],  SeniorityCode=new_attrs["SeniorityCode"])
+        new_restrictedinfo = RestrictedInfo(PersonId=new_attrs["PersonId"],  DateOfBirth=new_attrs["DateOfBirth"],  DateOfDeath=new_attrs["DateOfDeath"],  GovernmentId=new_attrs["GovernmentId"],  PassportId=new_attrs["PassportId"],  HireDire=new_attrs["HireDire"],  SeniorityCode=new_attrs["SeniorityCode"])
         db.session.add(new_restrictedinfo)
         db.session.commit()
 

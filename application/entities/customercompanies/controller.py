@@ -24,7 +24,7 @@ class CustomerCompanyResource(Resource):
     @responds(schema=CustomerCompanySchema)
     def post(self) -> CustomerCompany:
         obj: dict = request.parsed_obj
-        return CustomerCompanyService.create(obj)
+        return CustomerCompaniesService.create(obj)
 
 
 @api.route("/<int:CompanyId>")
@@ -45,6 +45,6 @@ class CustomerCompanyIdResource(Resource):
     def put(self, CompanyId: int) -> CustomerCompany:
 
         changes: CustomerCompanyInterface = request.parsed_obj
-        customercompany = CustomerCompaniesService.get_by_id(CustomerCompanies)
+        customercompany = CustomerCompaniesService.get_by_id(CompanyId)
         return CustomerCompaniesService.update(customercompany, changes)
 

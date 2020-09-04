@@ -21,7 +21,7 @@ class PersonLocationsService:
 
     @staticmethod
     def delete_by_id(personlocation_id: int) -> List[int]:
-        personlocation = PersonLocation.query.filter(PersonLocation. == personlocation_id).first()
+        personlocation = PersonLocation.query.filter(PersonLocation.PeoplePersonId == personlocation_id).first()
         if not personlocation:
             return []
         db.session.delete(personlocation)
@@ -30,7 +30,7 @@ class PersonLocationsService:
 
     @staticmethod
     def create(new_attrs: PersonLocationInterface) -> PersonLocation:
-        new_personlocation = PersonLocation(LocationsLocationsId=new_attrs["LocationsLocationsId"],  SubAdress=new_attrs["SubAdress"],  LocationUsage=new_attrs["LocationUsage"],  Notes=new_attrs["Notes"])
+        new_personlocation = PersonLocation(PeoplePersonId=new_attrs["PeoplePersonId"],  LocationsLocationsId=new_attrs["LocationsLocationsId"],  SubAddress=new_attrs["SubAddress"],  LocationUsage=new_attrs["LocationUsage"],  Notes=new_attrs["Notes"])
         db.session.add(new_personlocation)
         db.session.commit()
 

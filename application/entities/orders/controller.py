@@ -45,6 +45,6 @@ class OrdersIdResource(Resource):
     def put(self, OrderId: int) -> Orders:
 
         changes: OrdersInterface = request.parsed_obj
-        orders = OrdersService.get_by_id(Orders)
+        orders = OrdersService.get_by_id(OrderId)
         return OrdersService.update(orders, changes)
 

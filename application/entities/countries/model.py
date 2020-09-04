@@ -7,10 +7,11 @@ class Country(db.Model):
 
     __tablename__ = "Countries"
 
-    CountryName = Column(Integer())
-    CountryCode = Column(Integer())
-    NatLangCode = Column(String(255))
-    CurrencyCode = Column(Integer())
+    CountryId = Column(Integer(), primary_key=True)
+    CountryName = Column(String(255))
+    CountryCode = Column(String(255))
+    NatLangCode = Column(Integer())
+    CurrencyCode = Column(String(255))
 
 
     def update(self, changes: CountryInterface):

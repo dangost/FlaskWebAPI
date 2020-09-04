@@ -24,7 +24,7 @@ class CountryResource(Resource):
     @responds(schema=CountrySchema)
     def post(self) -> Country:
         obj: dict = request.parsed_obj
-        return CountryService.create(obj)
+        return CountriesService.create(obj)
 
 
 @api.route("/<int:CountryId>")
@@ -45,6 +45,6 @@ class CountryIdResource(Resource):
     def put(self, CountryId: int) -> Country:
 
         changes: CountryInterface = request.parsed_obj
-        country = CountriesService.get_by_id(Countries)
+        country = CountriesService.get_by_id(CountryId)
         return CountriesService.update(country, changes)
 

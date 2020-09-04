@@ -45,6 +45,6 @@ class EmploymentJobsIdResource(Resource):
     def put(self, HRJobId: int) -> EmploymentJobs:
 
         changes: EmploymentJobsInterface = request.parsed_obj
-        employmentjobs = EmploymentJobsService.get_by_id(EmploymentJobs)
+        employmentjobs = EmploymentJobsService.get_by_id(HRJobId)
         return EmploymentJobsService.update(employmentjobs, changes)
 

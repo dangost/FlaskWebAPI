@@ -30,7 +30,7 @@ class PhoneNumbersService:
 
     @staticmethod
     def create(new_attrs: PhoneNumberInterface) -> PhoneNumber:
-        new_phonenumber = PhoneNumber(PeoplePersonId=new_attrs["PeoplePersonId"],  LocationLocationId=new_attrs["LocationLocationId"],  Phonenumber=new_attrs["Phonenumber"],  CountryCode=new_attrs["CountryCode"],  PhoneType=new_attrs["PhoneType"])
+        new_phonenumber = PhoneNumber(PeoplePersonId=new_attrs["PeoplePersonId"],  LocationLocationId=new_attrs["LocationLocationId"],  PhoneNumber=new_attrs["PhoneNumber"],  CountryCode=new_attrs["CountryCode"],  PhoneType=new_attrs["PhoneType"])
         db.session.add(new_phonenumber)
         db.session.commit()
 

@@ -2,11 +2,13 @@ from mypy_extensions import TypedDict
 
 
 class LocationInterface(TypedDict, total=False):
+    LocationId: int
+
     CountryId: int
 
-    AdressLine1: str
+    AddressLine1: str
 
-    AdressLine2: str
+    AddressLine2: str
 
     City: str
 

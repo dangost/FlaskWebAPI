@@ -7,17 +7,18 @@ class Product(db.Model):
 
     __tablename__ = "Products"
 
-    ProductName = Column(Integer())
-    Description = Column(Integer())
-    Category = Column(String(255))
-    WeightClass = Column(Integer())
-    WarrantlyPeriod = Column(String(255))
-    SupplierId = Column(String(255))
-    Status = Column(Integer())
-    ListPrice = Column(String(255))
-    MinimumPrice = Column(String(255))
-    PriceCurrency = Column(Integer())
-    CatalogURL = Column(Integer())
+    ProductId = Column(Integer(), primary_key=True)
+    ProductName = Column(String(255))
+    Description = Column(String(255))
+    Category = Column(Integer())
+    WeightClass = Column(String(255))
+    WarrantyPeriod = Column(Integer())
+    SupplierId = Column(Integer())
+    Status = Column(String(255))
+    ListPrice = Column(Integer())
+    MinimumPrice = Column(Integer())
+    PriceCurrency = Column(String(255))
+    CatalogURL = Column(String(255))
 
 
     def update(self, changes: ProductInterface):

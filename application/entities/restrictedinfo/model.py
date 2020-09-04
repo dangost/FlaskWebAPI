@@ -7,12 +7,13 @@ class RestrictedInfo(db.Model):
 
     __tablename__ = "RestrictedInfo"
 
-    DateOfBirth = Column(Integer())
-    DateOfDeath = Column(Integer())
-    GovernmentId = Column(Integer())
-    PassportId = Column(Integer())
-    HireDire = Column(Integer())
-    SeniorityCode = Column(String(255))
+    PersonId = Column(Integer(), ForeignKey("People.PersonId"), primary_key=True)
+    DateOfBirth = Column(String(255))
+    DateOfDeath = Column(String(255))
+    GovernmentId = Column(String(255))
+    PassportId = Column(String(255))
+    HireDire = Column(String(255))
+    SeniorityCode = Column(Integer())
 
 
     def update(self, changes: RestrictedInfoInterface):

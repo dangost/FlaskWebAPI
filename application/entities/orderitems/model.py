@@ -7,10 +7,11 @@ class OrderItem(db.Model):
 
     __tablename__ = "OrderItems"
 
-    OrderId = Column(String(255))
-    ProductId = Column(String(255))
-    UnitPrice = Column(String(255))
-    Quantity = Column(String(255))
+    OrderItemId = Column(Integer(), primary_key=True)
+    OrderId = Column(Integer(), ForeignKey("Orders.OrderId"))
+    ProductId = Column(Integer(), ForeignKey("Products.ProductId"))
+    UnitPrice = Column(Integer())
+    Quantity = Column(Integer())
 
 
     def update(self, changes: OrderItemInterface):

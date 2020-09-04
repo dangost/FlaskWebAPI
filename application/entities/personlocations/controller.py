@@ -24,27 +24,27 @@ class PersonLocationResource(Resource):
     @responds(schema=PersonLocationSchema)
     def post(self) -> PersonLocation:
         obj: dict = request.parsed_obj
-        return PersonLocationService.create(obj)
+        return PersonLocationsService.create(obj)
 
 
-@api.route("/<int:>")
+@api.route("/<int:PeoplePersonId>")
 @api.param("PersonLocationsId", "PersonLocation database ID")
 class PersonLocationIdResource(Resource):
     @responds(schema=PersonLocationSchema)
-    def get(self, : int) -> PersonLocation:
-        return PersonLocationsService.get_by_id()
+    def get(self, PeoplePersonId: int) -> PersonLocation:
+        return PersonLocationsService.get_by_id(PeoplePersonId)
 
-    def delete(self, : int) -> Response:
+    def delete(self, PeoplePersonId: int) -> Response:
         from flask import jsonify
 
-        id: int = PersonLocationsService.delete_by_id()
+        id: int = PersonLocationsService.delete_by_id(PeoplePersonId)
         return jsonify(dict(status="Success", id=id))
 
     @accepts(schema=PersonLocationSchema, api=api)
     @responds(schema=PersonLocationSchema)
-    def put(self, : int) -> PersonLocation:
+    def put(self, PeoplePersonId: int) -> PersonLocation:
 
         changes: PersonLocationInterface = request.parsed_obj
-        personlocation = PersonLocationsService.get_by_id(PersonLocations)
+        personlocation = PersonLocationsService.get_by_id(PeoplePersonId)
         return PersonLocationsService.update(personlocation, changes)
 

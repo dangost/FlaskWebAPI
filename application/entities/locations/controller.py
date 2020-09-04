@@ -24,7 +24,7 @@ class LocationResource(Resource):
     @responds(schema=LocationSchema)
     def post(self) -> Location:
         obj: dict = request.parsed_obj
-        return LocationService.create(obj)
+        return LocationsService.create(obj)
 
 
 @api.route("/<int:LocationId>")
@@ -45,6 +45,6 @@ class LocationIdResource(Resource):
     def put(self, LocationId: int) -> Location:
 
         changes: LocationInterface = request.parsed_obj
-        location = LocationsService.get_by_id(Locations)
+        location = LocationsService.get_by_id(LocationId)
         return LocationsService.update(location, changes)
 

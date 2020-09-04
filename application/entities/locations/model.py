@@ -7,17 +7,18 @@ class Location(db.Model):
 
     __tablename__ = "Locations"
 
-    CountryId = Column(String(255))
-    AdressLine1 = Column(Integer())
-    AdressLine2 = Column(Integer())
-    City = Column(Integer())
-    State = Column(Integer())
-    District = Column(Integer())
-    PostalCode = Column(Integer())
-    LocationTypeCode = Column(String(255))
-    Description = Column(Integer())
-    ShippingNotes = Column(Integer())
-    CountriesCountryId = Column(String(255))
+    LocationId = Column(Integer(), primary_key=True)
+    CountryId = Column(Integer(), ForeignKey("Countries.CountryId"))
+    AddressLine1 = Column(String(255))
+    AddressLine2 = Column(String(255))
+    City = Column(String(255))
+    State = Column(String(255))
+    District = Column(String(255))
+    PostalCode = Column(String(255))
+    LocationTypeCode = Column(Integer())
+    Description = Column(String(255))
+    ShippingNotes = Column(String(255))
+    CountriesCountryId = Column(Integer())
 
 
     def update(self, changes: LocationInterface):

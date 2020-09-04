@@ -30,7 +30,7 @@ class CustomersService:
 
     @staticmethod
     def create(new_attrs: CustomerInterface) -> Customer:
-        new_customer = Customer(PersonId=new_attrs["PersonId"],  CustomEmployeeId=new_attrs["CustomEmployeeId"],  AccountMgrId=new_attrs["AccountMgrId"],  IncomeLevel=new_attrs["IncomeLevel"])
+        new_customer = Customer(CustomerId=new_attrs["CustomerId"],  PersonId=new_attrs["PersonId"],  CustomEmployeeId=new_attrs["CustomEmployeeId"],  AccountMgrId=new_attrs["AccountMgrId"],  IncomeLevel=new_attrs["IncomeLevel"])
         db.session.add(new_customer)
         db.session.commit()
 

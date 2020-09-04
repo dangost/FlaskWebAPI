@@ -2,6 +2,8 @@ from mypy_extensions import TypedDict
 
 
 class ProductInterface(TypedDict, total=False):
+    ProductId: int
+
     ProductName: str
 
     Description: str
@@ -10,7 +12,7 @@ class ProductInterface(TypedDict, total=False):
 
     WeightClass: str
 
-    WarrantlyPeriod: int
+    WarrantyPeriod: int
 
     SupplierId: int
 

@@ -24,7 +24,7 @@ class WarehouseResource(Resource):
     @responds(schema=WarehouseSchema)
     def post(self) -> Warehouse:
         obj: dict = request.parsed_obj
-        return WarehouseService.create(obj)
+        return WarehousesService.create(obj)
 
 
 @api.route("/<int:WarehouseId>")
@@ -45,6 +45,6 @@ class WarehouseIdResource(Resource):
     def put(self, WarehouseId: int) -> Warehouse:
 
         changes: WarehouseInterface = request.parsed_obj
-        warehouse = WarehousesService.get_by_id(Warehouses)
+        warehouse = WarehousesService.get_by_id(WarehouseId)
         return WarehousesService.update(warehouse, changes)
 

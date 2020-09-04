@@ -7,9 +7,10 @@ class CustomerCompany(db.Model):
 
     __tablename__ = "CustomerCompanies"
 
-    CompanyName = Column(Integer())
-    CompanyCreditLimit = Column(Integer())
-    CreditLimitCurrency = Column(Integer())
+    CompanyId = Column(Integer(), primary_key=True)
+    CompanyName = Column(String(255))
+    CompanyCreditLimit = Column(String(255))
+    CreditLimitCurrency = Column(String(255))
 
 
     def update(self, changes: CustomerCompanyInterface):

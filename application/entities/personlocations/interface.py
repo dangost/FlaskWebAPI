@@ -2,9 +2,11 @@ from mypy_extensions import TypedDict
 
 
 class PersonLocationInterface(TypedDict, total=False):
+    PersonsPersonId: int
+
     LocationsLocationsId: int
 
-    SubAdress: str
+    SubAddress: str
 
     LocationUsage: str
 

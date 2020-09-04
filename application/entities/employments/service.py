@@ -30,7 +30,7 @@ class EmploymentsService:
 
     @staticmethod
     def create(new_attrs: EmploymentInterface) -> Employment:
-        new_employment = Employment(PersonId=new_attrs["PersonId"],  HRJobId=new_attrs["HRJobId"],  ManagerEmployeeId=new_attrs["ManagerEmployeeId"],  StartDate=new_attrs["StartDate"],  EndDate=new_attrs["EndDate"],  Salary=new_attrs["Salary"],  CommissionPercent=new_attrs["CommissionPercent"],  Employmentcol=new_attrs["Employmentcol"])
+        new_employment = Employment(PersonId=new_attrs["PersonId"],  HRJobId=new_attrs["HRJobId"],  ManagerEmployeeId=new_attrs["ManagerEmployeeId"],  StartDate=new_attrs["StartDate"],  EndDate=new_attrs["EndDate"],  Salary=new_attrs["Salary"],  CommissionPercent=new_attrs["CommissionPercent"],  EmploymentCol=new_attrs["EmploymentCol"])
         db.session.add(new_employment)
         db.session.commit()
 
