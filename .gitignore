@@ -65,6 +65,7 @@ coverage.xml
 *.log
 local_settings.py
 db.sqlite3
+sqlite.db
 
 # Flask stuff:
 instance/
@@ -120,3 +121,4 @@ misc/
 .Rproj.user
 
 application/app-test.db
+.pytest_cache/

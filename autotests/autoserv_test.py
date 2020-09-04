@@ -64,22 +64,18 @@ from .interface import '''+class_names[i]+'''Interface
 
 
 class '''+list_names[i]+'''Service:
-    @staticmethod
-    def get_all() -> List['''+class_names[i]+''']:
+    def get_all(self) -> List['''+class_names[i]+''']:
         return '''+class_names[i]+'''.query.all()
 
-    @staticmethod
-    def get_by_id('''+class_names[i].lower()+'''_id: int) -> '''+class_names[i]+''':
+    def get_by_id(self, '''+class_names[i].lower()+'''_id: int) -> '''+class_names[i]+''':
         return '''+class_names[i]+'''.query.get('''+class_names[i].lower()+'''_id)
 
-    @staticmethod
-    def update('''+class_names[i].lower()+''': '''+class_names[i]+''', '''+class_names[i].lower()+'''_change_updates: '''+class_names[i]+'''Interface) -> '''+class_names[i]+''':
+    def update(self, '''+class_names[i].lower()+''': '''+class_names[i]+''', '''+class_names[i].lower()+'''_change_updates: '''+class_names[i]+'''Interface) -> '''+class_names[i]+''':
         '''+class_names[i].lower()+'''.update('''+class_names[i].lower()+'''_change_updates)
         db.session.commit()
         return '''+class_names[i].lower()+'''
 
-    @staticmethod
-    def delete_by_id('''+class_names[i].lower()+'''_id: int) -> List[int]:
+    def delete_by_id(self, '''+class_names[i].lower()+'''_id: int) -> List[int]:
         '''+class_names[i].lower()+''' = '''+class_names[i]+'''.query.filter('''+class_names[i]+'''.'''+id_names[i]+''' == '''+class_names[i].lower()+'''_id).first()
         if not '''+class_names[i].lower()+''':
             return []
@@ -87,8 +83,7 @@ class '''+list_names[i]+'''Service:
         db.session.commit()
         return ['''+class_names[i].lower()+'''_id]
 
-    @staticmethod
-    def create(new_attrs: '''+class_names[i]+'''Interface) -> '''+class_names[i]+''':
+    def create(self, new_attrs: '''+class_names[i]+'''Interface) -> '''+class_names[i]+''':
         new_'''+class_names[i].lower()+''' = '''+class_names[i]+'''('''+t[1:-2]+''')
         db.session.add(new_'''+class_names[i].lower()+''')
         db.session.commit()
