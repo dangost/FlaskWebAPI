@@ -35,7 +35,6 @@ base = [
     {"WarehouseId": "int", "LocationId": "int", "WarehouseName": "string"}
 ]
 
-
 path = r"D:\Projects\Regula\Web\FlaskWebAPI\application\entities"
 
 import os
@@ -45,25 +44,37 @@ for i in range(len(class_names)):
     for each in base[i]:
         var = ""
         if base[i].get(each) == "int":
-            var = "Integer"
-        else: var = "String"
-        t += "    " + each + " = fields." + var + "(attribute=\""+each+"\")\n\n"
+            var = "1"
+        else: var = "\"test\""
+        '''widget_id=1, name="Test widget", purpose="Test purpose"'''
+        t += each+"=" + var +", "
 
-    '''CountryName = fields.String(attribute="CountryName")'''
     folder_path = path + "\\" + list_names[i].lower()
 
     try:
         os.mkdir(folder_path)
     except BaseException:
         pass
-    new_path = folder_path+"\\schema.py"
+    new_path = folder_path+"\\interface_test.py"
     file = open(new_path, 'w')
 
-    temp = '''from marshmallow import fields, Schema
+    temp = '''from pytest import fixture
+from .model import '''+class_names[i]+'''
+from .interface import '''+class_names[i]+'''Interface
 
 
-class '''+class_names[i]+'''Schema(Schema):
-'''+t+'''
+@fixture
+def interface() -> '''+class_names[i]+'''Interface:
+    return '''+class_names[i]+'''Interface('''+t[0:-2]+''')
+
+
+def test_'''+class_names[i]+'''Interface_create(interface: '''+class_names[i]+'''Interface):
+    assert interface
+
+
+def test_'''+class_names[i]+'''Interface_works(interface: '''+class_names[i]+'''Interface):
+    '''+class_names[i].lower()+''' = '''+class_names[i]+'''(**interface)
+    assert '''+class_names[i].lower()+'''
 
 '''
     file.write(temp)

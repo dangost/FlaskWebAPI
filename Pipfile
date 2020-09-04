@@ -11,6 +11,7 @@ flask-accepts = "*"
 flask-sqlalchemy = "*"
 mypy-extensions = "*"
 flask-script = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.7"

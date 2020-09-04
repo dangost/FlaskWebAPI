@@ -35,7 +35,6 @@ base = [
     {"WarehouseId": "int", "LocationId": "int", "WarehouseName": "string"}
 ]
 
-
 path = r"D:\Projects\Regula\Web\FlaskWebAPI\application\entities"
 
 import os
@@ -45,25 +44,41 @@ for i in range(len(class_names)):
     for each in base[i]:
         var = ""
         if base[i].get(each) == "int":
-            var = "Integer"
-        else: var = "String"
-        t += "    " + each + " = fields." + var + "(attribute=\""+each+"\")\n\n"
+            var = "1"
+        else:
+            var = "\"test\""
+        '''widget_id=1, name="Test widget", purpose="Test purpose"'''
+        t += each + "=" + var + ", "
 
-    '''CountryName = fields.String(attribute="CountryName")'''
     folder_path = path + "\\" + list_names[i].lower()
 
     try:
         os.mkdir(folder_path)
     except BaseException:
         pass
-    new_path = folder_path+"\\schema.py"
+    new_path = folder_path+"\\model_test.py"
     file = open(new_path, 'w')
 
-    temp = '''from marshmallow import fields, Schema
+    temp = '''from pytest import fixture
+from flask_sqlalchemy import SQLAlchemy
+from application.test.fixtures import app, db  # noqa
+from .model import '''+class_names[i]+'''
 
 
-class '''+class_names[i]+'''Schema(Schema):
-'''+t+'''
+@fixture
+def '''+class_names[i].lower()+'''() -> '''+class_names[i]+''':
+    return '''+class_names[i]+'''('''+t[0:-2]+''')
+
+
+def test_'''+class_names[i]+'''_create('''+class_names[i].lower()+''': '''+class_names[i]+'''):
+    assert '''+class_names[i].lower()+'''
+
+
+def test_'''+class_names[i]+'''_retrieve('''+class_names[i].lower()+''': '''+class_names[i]+''', db: SQLAlchemy):  # noqa
+    db.session.add('''+class_names[i].lower()+''')
+    db.session.commit()
+    s = '''+class_names[i]+'''.query.first()
+    assert s.__dict__ == '''+class_names[i].lower()+'''.__dict__
 
 '''
     file.write(temp)
