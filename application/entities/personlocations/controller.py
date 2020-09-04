@@ -27,12 +27,12 @@ class PersonLocationResource(Resource):
         return PersonLocationService.create(obj)
 
 
-@api.route("/<int:PersonLocationId>")
+@api.route("/<int:>")
 @api.param("PersonLocationsId", "PersonLocation database ID")
 class PersonLocationIdResource(Resource):
     @responds(schema=PersonLocationSchema)
-    def get(self, : int) -> :
-        return PersonLocationsService.get_by_id(PersonLocations)
+    def get(self, : int) -> PersonLocation:
+        return PersonLocationsService.get_by_id()
 
     def delete(self, : int) -> Response:
         from flask import jsonify

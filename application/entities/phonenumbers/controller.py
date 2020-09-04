@@ -31,8 +31,8 @@ class PhoneNumberResource(Resource):
 @api.param("PhoneNumbersId", "PhoneNumber database ID")
 class PhoneNumberIdResource(Resource):
     @responds(schema=PhoneNumberSchema)
-    def get(self, PhoneNumberId: int) -> PhoneNumberId:
-        return PhoneNumbersService.get_by_id(PhoneNumbers)
+    def get(self, PhoneNumberId: int) -> PhoneNumber:
+        return PhoneNumbersService.get_by_id(PhoneNumberId)
 
     def delete(self, PhoneNumberId: int) -> Response:
         from flask import jsonify

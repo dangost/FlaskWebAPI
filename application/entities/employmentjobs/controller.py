@@ -27,12 +27,12 @@ class EmploymentJobsResource(Resource):
         return EmploymentJobsService.create(obj)
 
 
-@api.route("/<int:EmploymentJobsId>")
+@api.route("/<int:HRJobId>")
 @api.param("EmploymentJobsId", "EmploymentJobs database ID")
 class EmploymentJobsIdResource(Resource):
     @responds(schema=EmploymentJobsSchema)
-    def get(self, HRJobId: int) -> HRJobId:
-        return EmploymentJobsService.get_by_id(EmploymentJobs)
+    def get(self, HRJobId: int) -> EmploymentJobs:
+        return EmploymentJobsService.get_by_id(HRJobId)
 
     def delete(self, HRJobId: int) -> Response:
         from flask import jsonify

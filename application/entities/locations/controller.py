@@ -31,8 +31,8 @@ class LocationResource(Resource):
 @api.param("LocationsId", "Location database ID")
 class LocationIdResource(Resource):
     @responds(schema=LocationSchema)
-    def get(self, LocationId: int) -> LocationId:
-        return LocationsService.get_by_id(Locations)
+    def get(self, LocationId: int) -> Location:
+        return LocationsService.get_by_id(LocationId)
 
     def delete(self, LocationId: int) -> Response:
         from flask import jsonify

@@ -31,8 +31,8 @@ class CountryResource(Resource):
 @api.param("CountriesId", "Country database ID")
 class CountryIdResource(Resource):
     @responds(schema=CountrySchema)
-    def get(self, CountryId: int) -> CountryId:
-        return CountriesService.get_by_id(Countries)
+    def get(self, CountryId: int) -> Country:
+        return CountriesService.get_by_id(CountryId)
 
     def delete(self, CountryId: int) -> Response:
         from flask import jsonify

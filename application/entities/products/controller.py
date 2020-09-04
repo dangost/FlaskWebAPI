@@ -31,8 +31,8 @@ class ProductResource(Resource):
 @api.param("ProductsId", "Product database ID")
 class ProductIdResource(Resource):
     @responds(schema=ProductSchema)
-    def get(self, ProductId: int) -> ProductId:
-        return ProductsService.get_by_id(Products)
+    def get(self, ProductId: int) -> Product:
+        return ProductsService.get_by_id(ProductId)
 
     def delete(self, ProductId: int) -> Response:
         from flask import jsonify

@@ -31,8 +31,8 @@ class InventoryResource(Resource):
 @api.param("InventoriesId", "Inventory database ID")
 class InventoryIdResource(Resource):
     @responds(schema=InventorySchema)
-    def get(self, InventoryId: int) -> InventoryId:
-        return InventoriesService.get_by_id(Inventories)
+    def get(self, InventoryId: int) -> Inventory:
+        return InventoriesService.get_by_id(InventoryId)
 
     def delete(self, InventoryId: int) -> Response:
         from flask import jsonify

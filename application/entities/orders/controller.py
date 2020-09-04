@@ -27,12 +27,12 @@ class OrdersResource(Resource):
         return OrdersService.create(obj)
 
 
-@api.route("/<int:OrdersId>")
+@api.route("/<int:OrderId>")
 @api.param("OrdersId", "Orders database ID")
 class OrdersIdResource(Resource):
     @responds(schema=OrdersSchema)
-    def get(self, OrderId: int) -> OrderId:
-        return OrdersService.get_by_id(Orders)
+    def get(self, OrderId: int) -> Orders:
+        return OrdersService.get_by_id(OrderId)
 
     def delete(self, OrderId: int) -> Response:
         from flask import jsonify

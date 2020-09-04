@@ -27,12 +27,12 @@ class RestrictedInfoResource(Resource):
         return RestrictedInfoService.create(obj)
 
 
-@api.route("/<int:RestrictedInfoId>")
+@api.route("/<int:>")
 @api.param("RestrictedInfoId", "RestrictedInfo database ID")
 class RestrictedInfoIdResource(Resource):
     @responds(schema=RestrictedInfoSchema)
-    def get(self, : int) -> :
-        return RestrictedInfoService.get_by_id(RestrictedInfo)
+    def get(self, : int) -> RestrictedInfo:
+        return RestrictedInfoService.get_by_id()
 
     def delete(self, : int) -> Response:
         from flask import jsonify

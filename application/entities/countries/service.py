@@ -30,8 +30,9 @@ class CountriesService:
 
     @staticmethod
     def create(new_attrs: CountryInterface) -> Country:
-        new_country = Country(CountryName=new_attrs["CountryName"], CountryCode=new_attrs["CountryCode"], NatLangCode=new_attrs["NatLangCode"], CurrencyCode=new_attrs["CurrencyCode"])
+        new_country = Country(CountryName=new_attrs["CountryName"],  CountryCode=new_attrs["CountryCode"],  NatLangCode=new_attrs["NatLangCode"],  CurrencyCode=new_attrs["CurrencyCode"])
         db.session.add(new_country)
         db.session.commit()
 
         return new_country
+

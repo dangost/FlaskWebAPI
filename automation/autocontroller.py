@@ -78,12 +78,12 @@ class '''+class_names[i]+'''Resource(Resource):
         return '''+class_names[i]+'''Service.create(obj)
 
 
-@api.route("/<int:'''+class_names[i]+'''Id>")
+@api.route("/<int:'''+id_names[i]+'''>")
 @api.param("'''+list_names[i]+'''Id", "'''+class_names[i]+''' database ID")
 class '''+class_names[i]+'''IdResource(Resource):
     @responds(schema='''+class_names[i]+'''Schema)
-    def get(self, '''+id_names[i]+''': int) -> '''+id_names[i]+''':
-        return '''+list_names[i]+'''Service.get_by_id('''+list_names[i]+''')
+    def get(self, '''+id_names[i]+''': int) -> '''+class_names[i]+''':
+        return '''+list_names[i]+'''Service.get_by_id('''+id_names[i]+''')
 
     def delete(self, '''+id_names[i]+''': int) -> Response:
         from flask import jsonify
