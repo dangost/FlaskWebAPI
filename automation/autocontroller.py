@@ -45,59 +45,106 @@ for i in range(len(class_names)):
         os.mkdir(folder_path)
     except BaseException:
         pass
-    new_path = folder_path+"\\controller.py"
+    new_path = folder_path+"\\controller_test.py"
     file = open(new_path, 'w')
 
-    temp = '''from flask import request
-from flask_accepts import accepts, responds
-from flask_restx import Namespace, Resource
-from flask.wrappers import Response
-from typing import List
+    temp = '''from unittest.mock import patch
+from flask.testing import FlaskClient
 
+from app.test.fixtures import client, app  # noqa
+from .service import '''+class_names[i]+'''Service
 from .schema import '''+class_names[i]+'''Schema
-from .service import '''+list_names[i]+'''Service
 from .model import '''+class_names[i]+'''
 from .interface import '''+class_names[i]+'''Interface
-
-api = Namespace("'''+class_names[i]+'''", description="Single namespace, single entity")
-
-service = '''+list_names[i]+'''Service
-
-@api.route("/")
-class '''+class_names[i]+'''Resource(Resource):
-
-    @responds(schema='''+class_names[i]+'''Schema(many=True))
-    def get(self) -> List['''+class_names[i]+''']:
-        
-        return service.get_all(self)
-
-    @accepts(schema='''+class_names[i]+'''Schema, api=api)
-    @responds(schema='''+class_names[i]+'''Schema)
-    def post(self) -> '''+class_names[i]+''':
-        obj: dict = request.parsed_obj
-        return service.create(self, obj)
+from . import BASE_ROUTE
 
 
-@api.route("/<int:'''+id_names[i]+'''>")
-@api.param("'''+list_names[i]+'''Id", "'''+class_names[i]+''' database ID")
-class '''+class_names[i]+'''IdResource(Resource):
-    @responds(schema='''+class_names[i]+'''Schema)
-    def get(self, '''+id_names[i]+''': int) -> '''+class_names[i]+''':
-        return service.get_by_id(self, '''+id_names[i]+''')
+def make_widget(
+    id: int = 123, name: str = "Test widget", purpose: str = "Test purpose"
+) -> '''+class_names[i]+''':
+    return Widget(widget_id=id, name=name, purpose=purpose)
 
-    def delete(self, '''+id_names[i]+''': int) -> Response:
-        from flask import jsonify
 
-        id: int = service.delete_by_id(self, '''+id_names[i]+''')
-        return jsonify(dict(status="Success", id=id))
+class TestWidgetResource:
+    @patch.object(
+        WidgetService,
+        "get_all",
+        lambda: [
+            make_widget(123, name="Test Widget 1"),
+            make_widget(456, name="Test Widget 2"),
+        ],
+    )
+    def test_get(self, client: FlaskClient):  # noqa
+        with client:
+            results = client.get(f"/api/{BASE_ROUTE}", follow_redirects=True).get_json()
+            expected = (
+                WidgetSchema(many=True)
+                .dump(
+                    [
+                        make_widget(123, name="Test Widget 1"),
+                        make_widget(456, name="Test Widget 2"),
+                    ]
+                )
+                
+            )
+            for r in results:
+                assert r in expected
 
-    @accepts(schema='''+class_names[i]+'''Schema, api=api)
-    @responds(schema='''+class_names[i]+'''Schema)
-    def put(self, '''+id_names[i]+''': int) -> '''+class_names[i]+''':
+    @patch.object(
+        WidgetService, "create", lambda create_request: Widget(**create_request)
+    )
+    def test_post(self, client: FlaskClient):  # noqa
+        with client:
 
-        changes: '''+class_names[i]+'''Interface = request.parsed_obj
-        '''+class_names[i].lower()+''' = service.get_by_id(self, '''+id_names[i]+''')
-        return service.update(self, '''+class_names[i].lower()+''', changes)
+            payload = dict(name="Test widget", purpose="Test purpose")
+            result = client.post(f"/api/{BASE_ROUTE}/", json=payload).get_json()
+            expected = (
+                WidgetSchema()
+                .dump(Widget(name=payload["name"], purpose=payload["purpose"]))
+                
+            )
+            assert result == expected
+
+
+def fake_update(widget: Widget, changes: WidgetInterface) -> Widget:
+    # To fake an update, just return a new object
+    updated_Widget = Widget(
+        widget_id=widget.widget_id, name=changes["name"], purpose=changes["purpose"]
+    )
+    return updated_Widget
+
+
+class TestWidgetIdResource:
+    @patch.object(WidgetService, "get_by_id", lambda id: make_widget(id=id))
+    def test_get(self, client: FlaskClient):  # noqa
+        with client:
+            result = client.get(f"/api/{BASE_ROUTE}/123").get_json()
+            expected = make_widget(id=123)
+            print(f"result = ", result)
+            assert result["widgetId"] == expected.widget_id
+
+    @patch.object(WidgetService, "delete_by_id", lambda id: id)
+    def test_delete(self, client: FlaskClient):  # noqa
+        with client:
+            result = client.delete(f"/api/{BASE_ROUTE}/123").get_json()
+            expected = dict(status="Success", id=123)
+            assert result == expected
+
+    @patch.object(WidgetService, "get_by_id", lambda id: make_widget(id=id))
+    @patch.object(WidgetService, "update", fake_update)
+    def test_put(self, client: FlaskClient):  # noqa
+        with client:
+            result = client.put(
+                f"/api/{BASE_ROUTE}/123",
+                json={"name": "New Widget", "purpose": "New purpose"},
+            ).get_json()
+            expected = (
+                WidgetSchema()
+                .dump(Widget(widget_id=123, name="New Widget", purpose="New purpose"))
+                
+            )
+            assert result == expected
+
 
 '''
     file.write(temp)
