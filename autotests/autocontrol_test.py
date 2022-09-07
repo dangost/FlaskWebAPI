@@ -46,8 +46,6 @@ base_with_id = [
     {"WarehouseId": "int", "LocationId": "int", "WarehouseName": "string"}
 ]
 
-
-
 base = [
     {"CountryName": "string", "CountryCode": "string", "NatLangCode": "int", "CurrencyCode": "string"},
     {"CustomerId": "int", "PersonId": "int", "CustomEmployeeId": "int", "AccountMgrId": "int", "IncomeLevel": "int"},
@@ -66,19 +64,18 @@ base = [
      "OrderTotal": "int", "OrderCurrency": "string", "PromotionCode": "string"},
     {"FirstName": "string", "LastName": "string", "MiddleName": "string", "Nickname": "string", "NatLangCode": "int",
      "CultureCode": "int", "Gender": "string"},
-    {"PeoplePersonId": "int", "LocationsLocationsId": "int", "SubAddress": "string", "LocationUsage": "string", "Notes": "string"},
+    {"PeoplePersonId": "int", "LocationsLocationsId": "int", "SubAddress": "string", "LocationUsage": "string",
+     "Notes": "string"},
     {"PeoplePersonId": "int", "LocationLocationId": "int", "PhoneNumber": "int", "CountryCode": "int",
      "PhoneType": "int"},
     {"ProductName": "string", "Description": "string", "Category": "int", "WeightClass": "string",
      "WarrantyPeriod": "int", "SupplierId": "int", "Status": "string", "ListPrice": "int", "MinimumPrice": "int",
      "PriceCurrency": "string", "CatalogURL": "string"},
-    {"PersonId": "int", "DateOfBirth": "string", "DateOfDeath": "string", "GovernmentId": "string", "PassportId": "string",
+    {"PersonId": "int", "DateOfBirth": "string", "DateOfDeath": "string", "GovernmentId": "string",
+     "PassportId": "string",
      "HireDire": "string", "SeniorityCode": "int"},
     {"WarehouseId": "int", "LocationId": "int", "WarehouseName": "string"}
 ]
-
-
-
 
 path = r"D:\Projects\Regula\Web\FlaskWebAPI\application\entities"
 
@@ -86,7 +83,6 @@ import os
 
 for i in range(len(class_names)):
     folder_path = path + "\\" + list_names[i].lower()
-
 
     t = ""
     b = ""
@@ -109,7 +105,7 @@ for i in range(len(class_names)):
         q1 += each + var1 + ", "
         '''widget_id=id, name=name, purpose=purpose)'''
         '''widget_id=widget.widget_id, name=changes["name"], purpose=changes["purpose"]'''
-    f = id_names[i] + "=" + class_names[i].lower() + "."+id_names[i]+", "
+    f = id_names[i] + "=" + class_names[i].lower() + "." + id_names[i] + ", "
     z = ""
     for each in base[i]:
         var1 = ""
@@ -123,11 +119,9 @@ for i in range(len(class_names)):
         '''widget_id=1, name="Test widget", purpose="Test purpose"'''
         q += each + var1 + ", "
         z += each + var2
-        f += each + "=payload[\""+each+"\"], "
+        f += each + "=payload[\"" + each + "\"], "
         '''widget_id=id, name=name, purpose=purpose)'''
         '''name=payload["name"], purpose=payload["purpose"]'''
-
-
 
     try:
         os.mkdir(folder_path)
@@ -144,10 +138,10 @@ from .model import ''' + class_names[i] + '''
 from . import BASE_ROUTE
 
 
-def make_'''+class_names[i].lower()+'''(
-    '''+t[0:-2]+'''
+def make_''' + class_names[i].lower() + '''(
+    ''' + t[0:-2] + '''
 ) -> ''' + class_names[i] + ''':
-    return '''+class_names[i]+'''('''+b[0:-2]+''')
+    return ''' + class_names[i] + '''(''' + b[0:-2] + ''')
 
 
 class Test''' + class_names[i] + '''Resource:
@@ -156,7 +150,7 @@ class Test''' + class_names[i] + '''Resource:
         "get_all",
         lambda: [
             make_''' + class_names[i].lower() + '''(),
-            make_'''+class_names[i].lower()+'''('''+id_names[i]+'''=20),
+            make_''' + class_names[i].lower() + '''(''' + id_names[i] + '''=20),
         ],
     )
     def test_get(self, client: FlaskClient):  # noqa
@@ -167,7 +161,7 @@ class Test''' + class_names[i] + '''Resource:
                 .dump(
                     [
                         make_''' + class_names[i].lower() + '''(),
-                        make_'''+class_names[i].lower()+'''('''+id_names[i]+'''=20),
+                        make_''' + class_names[i].lower() + '''(''' + id_names[i] + '''=20),
                     ]
                 )
 
@@ -181,11 +175,11 @@ class Test''' + class_names[i] + '''Resource:
     def test_post(self, client: FlaskClient):  # noqa
         with client:
 
-            payload = dict('''+q[0:-2]+''')
+            payload = dict(''' + q[0:-2] + ''')
             result = client.post(f"/api/{BASE_ROUTE}/", json=payload).get_json()
             expected = (
                 ''' + class_names[i] + '''Schema()
-                .dump(''' + class_names[i] + '''('''+z[0:-2]+'''))
+                .dump(''' + class_names[i] + '''(''' + z[0:-2] + '''))
 
             )
             assert result == expected

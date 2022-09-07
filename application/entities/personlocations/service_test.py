@@ -1,13 +1,16 @@
 from flask_sqlalchemy import SQLAlchemy
 from typing import List
+
+from .interface import PersonLocationInterface
 from .model import PersonLocation
 from .service import PersonLocationsService  # noqa
-from .interface import PersonLocationInterface
 
 
 def test_get_all(db: SQLAlchemy):  # noqa
-    yin: PersonLocation = PersonLocation(PersonsPersonId=16, LocationsLocationsId=16, SubAddress="test16", LocationUsage="test16", Notes="test16")
-    yang: PersonLocation = PersonLocation(PersonsPersonId=16, LocationsLocationsId=16, SubAddress="test16", LocationUsage="test16", Notes="test16")
+    yin: PersonLocation = PersonLocation(PersonsPersonId=16, LocationsLocationsId=16, SubAddress="test16",
+                                         LocationUsage="test16", Notes="test16")
+    yang: PersonLocation = PersonLocation(PersonsPersonId=16, LocationsLocationsId=16, SubAddress="test16",
+                                          LocationUsage="test16", Notes="test16")
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -19,8 +22,10 @@ def test_get_all(db: SQLAlchemy):  # noqa
 
 
 def test_delete_by_id(db: SQLAlchemy):  # noqa
-    yin: PersonLocation = PersonLocation(PersonsPersonId=16, LocationsLocationsId=16, SubAddress="test16", LocationUsage="test16", Notes="test16")
-    yang: PersonLocation = PersonLocation(PersonsPersonId=16, LocationsLocationsId=16, SubAddress="test16", LocationUsage="test16", Notes="test16")
+    yin: PersonLocation = PersonLocation(PersonsPersonId=16, LocationsLocationsId=16, SubAddress="test16",
+                                         LocationUsage="test16", Notes="test16")
+    yang: PersonLocation = PersonLocation(PersonsPersonId=16, LocationsLocationsId=16, SubAddress="test16",
+                                          LocationUsage="test16", Notes="test16")
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -44,5 +49,3 @@ def test_create(db: SQLAlchemy):  # noqa
 
     for k in yin.keys():
         assert getattr(results[0], k) == yin[k]
-
-

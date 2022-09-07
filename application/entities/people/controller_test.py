@@ -1,15 +1,18 @@
-from unittest.mock import patch
 from flask.testing import FlaskClient
-from .service import PeopleService
-from .schema import PersonSchema
-from .model import Person
+from unittest.mock import patch
+
 from . import BASE_ROUTE
+from .model import Person
+from .schema import PersonSchema
+from .service import PeopleService
 
 
 def make_person(
-    personid: int = 1, firstname:str = "test", lastname:str = "test", middlename:str = "test", nickname:str = "test", natlangcode: int = 1, culturecode: int = 1, gender:str = "test"
+        personid: int = 1, firstname: str = "test", lastname: str = "test", middlename: str = "test",
+        nickname: str = "test", natlangcode: int = 1, culturecode: int = 1, gender: str = "test"
 ) -> Person:
-    return Person(PersonId=personid, FirstName=firstname, LastName=lastname, MiddleName=middlename, Nickname=nickname, NatLangCode=natlangcode, CultureCode=culturecode, Gender=gender)
+    return Person(PersonId=personid, FirstName=firstname, LastName=lastname, MiddleName=middlename, Nickname=nickname,
+                  NatLangCode=natlangcode, CultureCode=culturecode, Gender=gender)
 
 
 class TestPersonResource:
@@ -26,7 +29,7 @@ class TestPersonResource:
             results = client.get(f"/api/{BASE_ROUTE}", follow_redirects=True).get_json()
             expected = (
                 PersonSchema(many=True)
-                .dump(
+                    .dump(
                     [
                         make_person(),
                         make_person(Id=20),
@@ -42,12 +45,14 @@ class TestPersonResource:
     )
     def test_post(self, client: FlaskClient):  # noqa
         with client:
-
-            payload = dict(FirstName="test", LastName="test", MiddleName="test", Nickname="test", NatLangCode=1, CultureCode=1, Gender="test")
+            payload = dict(FirstName="test", LastName="test", MiddleName="test", Nickname="test", NatLangCode=1,
+                           CultureCode=1, Gender="test")
             result = client.post(f"/api/{BASE_ROUTE}/", json=payload).get_json()
             expected = (
                 PersonSchema()
-                .dump(Person(FirstName=payload["test"], LastName=payload["test"], MiddleName=payload["test"], Nickname=payload["test"], NatLangCode=payload[1], CultureCode=payload[1], Gender=payload["test"]))
+                    .dump(Person(FirstName=payload["test"], LastName=payload["test"], MiddleName=payload["test"],
+                                 Nickname=payload["test"], NatLangCode=payload[1], CultureCode=payload[1],
+                                 Gender=payload["test"]))
 
             )
             assert result == expected
@@ -68,4 +73,3 @@ class TestPersonIdResource:
             result = client.delete(f"/api/{BASE_ROUTE}/123").get_json()
             expected = dict(status="Success", id=123)
             assert result == expected
-

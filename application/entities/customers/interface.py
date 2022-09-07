@@ -11,6 +11,3 @@ class CustomerInterface(TypedDict, total=False):
     AccountMgrId: int
 
     IncomeLevel: int
-
-
-

@@ -1,7 +1,8 @@
-from application import db
 from typing import List
-from .model import Person
+
+from application import db
 from .interface import PersonInterface
+from .model import Person
 
 
 class PeopleService:
@@ -25,9 +26,11 @@ class PeopleService:
         return [person_id]
 
     def create(self, new_attrs: PersonInterface) -> Person:
-        new_person = Person(FirstName=new_attrs["FirstName"],  LastName=new_attrs["LastName"],  MiddleName=new_attrs["MiddleName"],  Nickname=new_attrs["Nickname"],  NatLangCode=new_attrs["NatLangCode"],  CultureCode=new_attrs["CultureCode"],  Gender=new_attrs["Gender"])
+        new_person = Person(FirstName=new_attrs["FirstName"], LastName=new_attrs["LastName"],
+                            MiddleName=new_attrs["MiddleName"], Nickname=new_attrs["Nickname"],
+                            NatLangCode=new_attrs["NatLangCode"], CultureCode=new_attrs["CultureCode"],
+                            Gender=new_attrs["Gender"])
         db.session.add(new_person)
         db.session.commit()
 
         return new_person
-

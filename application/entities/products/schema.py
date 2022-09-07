@@ -25,6 +25,3 @@ class ProductSchema(Schema):
     PriceCurrency = fields.String(attribute="PriceCurrency")
 
     CatalogURL = fields.String(attribute="CatalogURL")
-
-
-

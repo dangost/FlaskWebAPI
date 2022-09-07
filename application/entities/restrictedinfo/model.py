@@ -1,10 +1,10 @@
 from sqlalchemy import Integer, Column, String, ForeignKey
+
 from application import db
 from .interface import RestrictedInfoInterface
 
 
 class RestrictedInfo(db.Model):
-
     __tablename__ = "RestrictedInfo"
 
     PersonId = Column(Integer(), ForeignKey("People.PersonId"), primary_key=True)
@@ -15,12 +15,8 @@ class RestrictedInfo(db.Model):
     HireDire = Column(String(255))
     SeniorityCode = Column(Integer())
 
-
     def update(self, changes: RestrictedInfoInterface):
         for key, val in changes.items():
             setattr(self, key, val)
 
         return self
-
-
-

@@ -1,8 +1,8 @@
 from pytest import fixture
 
+from .interface import OrderItemInterface
 from .model import OrderItem
 from .schema import OrderItemSchema
-from .interface import OrderItemInterface
 
 
 @fixture
@@ -24,5 +24,3 @@ def test_OrderItemSchema_works(schema: OrderItemSchema):
     assert orderitem.ProductId == 1
     assert orderitem.UnitPrice == 1
     assert orderitem.Quantity == 1
-
-

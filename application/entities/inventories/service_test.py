@@ -1,8 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
 from typing import List
+
+from .interface import InventoryInterface
 from .model import Inventory
 from .service import InventoriesService  # noqa
-from .interface import InventoryInterface
 
 
 def test_get_all(db: SQLAlchemy):  # noqa
@@ -44,5 +45,3 @@ def test_create(db: SQLAlchemy):  # noqa
 
     for k in yin.keys():
         assert getattr(results[0], k) == yin[k]
-
-

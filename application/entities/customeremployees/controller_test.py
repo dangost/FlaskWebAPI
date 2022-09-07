@@ -1,15 +1,19 @@
-from unittest.mock import patch
 from flask.testing import FlaskClient
-from .service import CustomerEmployeesService
-from .schema import CustomerEmployeeSchema
-from .model import CustomerEmployee
+from unittest.mock import patch
+
 from . import BASE_ROUTE
+from .model import CustomerEmployee
+from .schema import CustomerEmployeeSchema
+from .service import CustomerEmployeesService
 
 
 def make_customeremployee(
-    customeremployeeid: int = 1, companyid: int = 1, badgenumber:str = "test", jobtitle:str = "test", department:str = "test", creditlimit: int = 1, creditlimitcurrency: int = 1
+        customeremployeeid: int = 1, companyid: int = 1, badgenumber: str = "test", jobtitle: str = "test",
+        department: str = "test", creditlimit: int = 1, creditlimitcurrency: int = 1
 ) -> CustomerEmployee:
-    return CustomerEmployee(CustomerEmployeeId=customeremployeeid, CompanyId=companyid, BadgeNumber=badgenumber, JobTitle=jobtitle, Department=department, CreditLimit=creditlimit, CreditLimitCurrency=creditlimitcurrency)
+    return CustomerEmployee(CustomerEmployeeId=customeremployeeid, CompanyId=companyid, BadgeNumber=badgenumber,
+                            JobTitle=jobtitle, Department=department, CreditLimit=creditlimit,
+                            CreditLimitCurrency=creditlimitcurrency)
 
 
 class TestCustomerEmployeeResource:
@@ -26,7 +30,7 @@ class TestCustomerEmployeeResource:
             results = client.get(f"/api/{BASE_ROUTE}", follow_redirects=True).get_json()
             expected = (
                 CustomerEmployeeSchema(many=True)
-                .dump(
+                    .dump(
                     [
                         make_customeremployee(),
                         make_customeremployee(CustomerEmployeeId=20),
@@ -42,12 +46,14 @@ class TestCustomerEmployeeResource:
     )
     def test_post(self, client: FlaskClient):  # noqa
         with client:
-
-            payload = dict(CompanyId=1, BadgeNumber="test", JobTitle="test", Department="test", CreditLimit=1, CreditLimitCurrency=1)
+            payload = dict(CompanyId=1, BadgeNumber="test", JobTitle="test", Department="test", CreditLimit=1,
+                           CreditLimitCurrency=1)
             result = client.post(f"/api/{BASE_ROUTE}/", json=payload).get_json()
             expected = (
                 CustomerEmployeeSchema()
-                .dump(CustomerEmployee(CompanyId=payload[1], BadgeNumber=payload["test"], JobTitle=payload["test"], Department=payload["test"], CreditLimit=payload[1], CreditLimitCurrency=payload[1]))
+                    .dump(CustomerEmployee(CompanyId=payload[1], BadgeNumber=payload["test"], JobTitle=payload["test"],
+                                           Department=payload["test"], CreditLimit=payload[1],
+                                           CreditLimitCurrency=payload[1]))
 
             )
             assert result == expected
@@ -68,4 +74,3 @@ class TestCustomerEmployeeIdResource:
             result = client.delete(f"/api/{BASE_ROUTE}/123").get_json()
             expected = dict(status="Success", id=123)
             assert result == expected
-

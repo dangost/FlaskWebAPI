@@ -1,6 +1,7 @@
 from pytest import fixture
-from .model import Customer
+
 from .interface import CustomerInterface
+from .model import Customer
 
 
 @fixture
@@ -15,4 +16,3 @@ def test_CustomerInterface_create(interface: CustomerInterface):
 def test_CustomerInterface_works(interface: CustomerInterface):
     customer = Customer(**interface)
     assert customer
-

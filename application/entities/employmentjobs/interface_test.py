@@ -1,6 +1,7 @@
 from pytest import fixture
-from .model import EmploymentJobs
+
 from .interface import EmploymentJobsInterface
+from .model import EmploymentJobs
 
 
 @fixture
@@ -15,4 +16,3 @@ def test_EmploymentJobsInterface_create(interface: EmploymentJobsInterface):
 def test_EmploymentJobsInterface_works(interface: EmploymentJobsInterface):
     employmentjobs = EmploymentJobs(**interface)
     assert employmentjobs
-

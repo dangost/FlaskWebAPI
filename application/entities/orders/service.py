@@ -1,7 +1,8 @@
-from application import db
 from typing import List
-from .model import Orders
+
+from application import db
 from .interface import OrdersInterface
+from .model import Orders
 
 
 class OrdersService:
@@ -25,9 +26,11 @@ class OrdersService:
         return [orders_id]
 
     def create(self, new_attrs: OrdersInterface) -> Orders:
-        new_orders = Orders(CustomerId=new_attrs["CustomerId"],  SalesRepId=new_attrs["SalesRepId"],  OrderDate=new_attrs["OrderDate"],  OrderCode=new_attrs["OrderCode"],  OrderStatus=new_attrs["OrderStatus"],  OrderTotal=new_attrs["OrderTotal"],  OrderCurrency=new_attrs["OrderCurrency"],  PromotionCode=new_attrs["PromotionCode"])
+        new_orders = Orders(CustomerId=new_attrs["CustomerId"], SalesRepId=new_attrs["SalesRepId"],
+                            OrderDate=new_attrs["OrderDate"], OrderCode=new_attrs["OrderCode"],
+                            OrderStatus=new_attrs["OrderStatus"], OrderTotal=new_attrs["OrderTotal"],
+                            OrderCurrency=new_attrs["OrderCurrency"], PromotionCode=new_attrs["PromotionCode"])
         db.session.add(new_orders)
         db.session.commit()
 
         return new_orders
-

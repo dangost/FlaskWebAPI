@@ -1,24 +1,24 @@
 from flask import request
+from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
-from flask.wrappers import Response
 from typing import List
 
+from .interface import PhoneNumberInterface
+from .model import PhoneNumber
 from .schema import PhoneNumberSchema
 from .service import PhoneNumbersService
-from .model import PhoneNumber
-from .interface import PhoneNumberInterface
 
 api = Namespace("PhoneNumber", description="Single namespace, single entity")
 
 service = PhoneNumbersService
+
 
 @api.route("/")
 class PhoneNumberResource(Resource):
 
     @responds(schema=PhoneNumberSchema(many=True))
     def get(self) -> List[PhoneNumber]:
-        
         return service.get_all(self)
 
     @accepts(schema=PhoneNumberSchema, api=api)
@@ -44,8 +44,6 @@ class PhoneNumberIdResource(Resource):
     @accepts(schema=PhoneNumberSchema, api=api)
     @responds(schema=PhoneNumberSchema)
     def put(self, PhoneNumberId: int) -> PhoneNumber:
-
         changes: PhoneNumberInterface = request.parsed_obj
         phonenumber = service.get_by_id(self, PhoneNumberId)
         return service.update(self, phonenumber, changes)
-

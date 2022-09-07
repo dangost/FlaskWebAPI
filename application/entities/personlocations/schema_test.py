@@ -1,8 +1,8 @@
 from pytest import fixture
 
+from .interface import PersonLocationInterface
 from .model import PersonLocation
 from .schema import PersonLocationSchema
-from .interface import PersonLocationInterface
 
 
 @fixture
@@ -25,5 +25,3 @@ def test_PersonLocationSchema_works(schema: PersonLocationSchema):
     assert personlocation.SubAddress == "test"
     assert personlocation.LocationUsage == "test"
     assert personlocation.Notes == "test"
-
-

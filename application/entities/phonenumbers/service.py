@@ -1,7 +1,8 @@
-from application import db
 from typing import List
-from .model import PhoneNumber
+
+from application import db
 from .interface import PhoneNumberInterface
+from .model import PhoneNumber
 
 
 class PhoneNumbersService:
@@ -25,9 +26,11 @@ class PhoneNumbersService:
         return [phonenumber_id]
 
     def create(self, new_attrs: PhoneNumberInterface) -> PhoneNumber:
-        new_phonenumber = PhoneNumber(PeoplePersonId=new_attrs["PeoplePersonId"],  LocationLocationId=new_attrs["LocationLocationId"],  PhoneNumber=new_attrs["PhoneNumber"],  CountryCode=new_attrs["CountryCode"],  PhoneType=new_attrs["PhoneType"])
+        new_phonenumber = PhoneNumber(PeoplePersonId=new_attrs["PeoplePersonId"],
+                                      LocationLocationId=new_attrs["LocationLocationId"],
+                                      PhoneNumber=new_attrs["PhoneNumber"], CountryCode=new_attrs["CountryCode"],
+                                      PhoneType=new_attrs["PhoneType"])
         db.session.add(new_phonenumber)
         db.session.commit()
 
         return new_phonenumber
-

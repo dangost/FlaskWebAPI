@@ -1,5 +1,6 @@
-from pytest import fixture
 from flask_sqlalchemy import SQLAlchemy
+from pytest import fixture
+
 from application.test.fixtures import app, db  # noqa
 from .model import Customer
 
@@ -18,4 +19,3 @@ def test_Customer_retrieve(customer: Customer, db: SQLAlchemy):  # noqa
     db.session.commit()
     s = Customer.query.first()
     assert s.__dict__ == customer.__dict__
-

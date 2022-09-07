@@ -13,6 +13,3 @@ class PhoneNumberSchema(Schema):
     CountryCode = fields.Integer(attribute="CountryCode")
 
     PhoneType = fields.Integer(attribute="PhoneType")
-
-
-

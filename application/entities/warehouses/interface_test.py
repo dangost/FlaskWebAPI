@@ -1,6 +1,7 @@
 from pytest import fixture
-from .model import Warehouse
+
 from .interface import WarehouseInterface
+from .model import Warehouse
 
 
 @fixture
@@ -15,4 +16,3 @@ def test_WarehouseInterface_create(interface: WarehouseInterface):
 def test_WarehouseInterface_works(interface: WarehouseInterface):
     warehouse = Warehouse(**interface)
     assert warehouse
-

@@ -1,15 +1,19 @@
-from unittest.mock import patch
 from flask.testing import FlaskClient
-from .service import PhoneNumbersService
-from .schema import PhoneNumberSchema
-from .model import PhoneNumber
+from unittest.mock import patch
+
 from . import BASE_ROUTE
+from .model import PhoneNumber
+from .schema import PhoneNumberSchema
+from .service import PhoneNumbersService
 
 
 def make_phonenumber(
-    phonenumberid: int = 1, peoplepersonid: int = 1, locationlocationid: int = 1, phonenumber: int = 1, countrycode: int = 1, phonetype: int = 1
+        phonenumberid: int = 1, peoplepersonid: int = 1, locationlocationid: int = 1, phonenumber: int = 1,
+        countrycode: int = 1, phonetype: int = 1
 ) -> PhoneNumber:
-    return PhoneNumber(PhoneNumberId=phonenumberid, PeoplePersonId=peoplepersonid, LocationLocationId=locationlocationid, PhoneNumber=phonenumber, CountryCode=countrycode, PhoneType=phonetype)
+    return PhoneNumber(PhoneNumberId=phonenumberid, PeoplePersonId=peoplepersonid,
+                       LocationLocationId=locationlocationid, PhoneNumber=phonenumber, CountryCode=countrycode,
+                       PhoneType=phonetype)
 
 
 class TestPhoneNumberResource:
@@ -26,7 +30,7 @@ class TestPhoneNumberResource:
             results = client.get(f"/api/{BASE_ROUTE}", follow_redirects=True).get_json()
             expected = (
                 PhoneNumberSchema(many=True)
-                .dump(
+                    .dump(
                     [
                         make_phonenumber(),
                         make_phonenumber(PhoneNumberId=20),
@@ -42,12 +46,12 @@ class TestPhoneNumberResource:
     )
     def test_post(self, client: FlaskClient):  # noqa
         with client:
-
             payload = dict(PeoplePersonId=1, LocationLocationId=1, PhoneNumber=1, CountryCode=1, PhoneType=1)
             result = client.post(f"/api/{BASE_ROUTE}/", json=payload).get_json()
             expected = (
                 PhoneNumberSchema()
-                .dump(PhoneNumber(PeoplePersonId=payload[1], LocationLocationId=payload[1], PhoneNumber=payload[1], CountryCode=payload[1], PhoneType=payload[1]))
+                    .dump(PhoneNumber(PeoplePersonId=payload[1], LocationLocationId=payload[1], PhoneNumber=payload[1],
+                                      CountryCode=payload[1], PhoneType=payload[1]))
 
             )
             assert result == expected
@@ -68,4 +72,3 @@ class TestPhoneNumberIdResource:
             result = client.delete(f"/api/{BASE_ROUTE}/123").get_json()
             expected = dict(status="Success", id=123)
             assert result == expected
-

@@ -1,10 +1,10 @@
 from sqlalchemy import Integer, Column, String, ForeignKey
+
 from application import db
 from .interface import ProductInterface
 
 
 class Product(db.Model):
-
     __tablename__ = "Products"
 
     ProductId = Column(Integer(), primary_key=True)
@@ -20,12 +20,8 @@ class Product(db.Model):
     PriceCurrency = Column(String(255))
     CatalogURL = Column(String(255))
 
-
     def update(self, changes: ProductInterface):
         for key, val in changes.items():
             setattr(self, key, val)
 
         return self
-
-
-

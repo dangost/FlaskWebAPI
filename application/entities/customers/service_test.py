@@ -1,8 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
 from typing import List
+
+from .interface import CustomerInterface
 from .model import Customer
 from .service import CustomersService  # noqa
-from .interface import CustomerInterface
 
 
 def test_get_all(db: SQLAlchemy):  # noqa
@@ -44,5 +45,3 @@ def test_create(db: SQLAlchemy):  # noqa
 
     for k in yin.keys():
         assert getattr(results[0], k) == yin[k]
-
-

@@ -1,13 +1,18 @@
 from flask_sqlalchemy import SQLAlchemy
 from typing import List
+
+from .interface import CustomerEmployeeInterface
 from .model import CustomerEmployee
 from .service import CustomerEmployeesService  # noqa
-from .interface import CustomerEmployeeInterface
 
 
 def test_get_all(db: SQLAlchemy):  # noqa
-    yin: CustomerEmployee = CustomerEmployee(CustomerEmployeeId=16, CompanyId=16, BadgeNumber="test16", JobTitle="test16", Department="test16", CreditLimit=16, CreditLimitCurrency=16)
-    yang: CustomerEmployee = CustomerEmployee(CustomerEmployeeId=16, CompanyId=16, BadgeNumber="test16", JobTitle="test16", Department="test16", CreditLimit=16, CreditLimitCurrency=16)
+    yin: CustomerEmployee = CustomerEmployee(CustomerEmployeeId=16, CompanyId=16, BadgeNumber="test16",
+                                             JobTitle="test16", Department="test16", CreditLimit=16,
+                                             CreditLimitCurrency=16)
+    yang: CustomerEmployee = CustomerEmployee(CustomerEmployeeId=16, CompanyId=16, BadgeNumber="test16",
+                                              JobTitle="test16", Department="test16", CreditLimit=16,
+                                              CreditLimitCurrency=16)
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -19,8 +24,12 @@ def test_get_all(db: SQLAlchemy):  # noqa
 
 
 def test_delete_by_id(db: SQLAlchemy):  # noqa
-    yin: CustomerEmployee = CustomerEmployee(CustomerEmployeeId=16, CompanyId=16, BadgeNumber="test16", JobTitle="test16", Department="test16", CreditLimit=16, CreditLimitCurrency=16)
-    yang: CustomerEmployee = CustomerEmployee(CustomerEmployeeId=16, CompanyId=16, BadgeNumber="test16", JobTitle="test16", Department="test16", CreditLimit=16, CreditLimitCurrency=16)
+    yin: CustomerEmployee = CustomerEmployee(CustomerEmployeeId=16, CompanyId=16, BadgeNumber="test16",
+                                             JobTitle="test16", Department="test16", CreditLimit=16,
+                                             CreditLimitCurrency=16)
+    yang: CustomerEmployee = CustomerEmployee(CustomerEmployeeId=16, CompanyId=16, BadgeNumber="test16",
+                                              JobTitle="test16", Department="test16", CreditLimit=16,
+                                              CreditLimitCurrency=16)
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -44,5 +53,3 @@ def test_create(db: SQLAlchemy):  # noqa
 
     for k in yin.keys():
         assert getattr(results[0], k) == yin[k]
-
-

@@ -1,15 +1,18 @@
-from unittest.mock import patch
 from flask.testing import FlaskClient
-from .service import PersonLocationsService
-from .schema import PersonLocationSchema
-from .model import PersonLocation
+from unittest.mock import patch
+
 from . import BASE_ROUTE
+from .model import PersonLocation
+from .schema import PersonLocationSchema
+from .service import PersonLocationsService
 
 
 def make_personlocation(
-    personspersonid: int = 1, locationslocationsid: int = 1, subaddress:str = "test", locationusage:str = "test", notes:str = "test"
+        personspersonid: int = 1, locationslocationsid: int = 1, subaddress: str = "test", locationusage: str = "test",
+        notes: str = "test"
 ) -> PersonLocation:
-    return PersonLocation(PersonsPersonId=personspersonid, LocationsLocationsId=locationslocationsid, SubAddress=subaddress, LocationUsage=locationusage, Notes=notes)
+    return PersonLocation(PersonsPersonId=personspersonid, LocationsLocationsId=locationslocationsid,
+                          SubAddress=subaddress, LocationUsage=locationusage, Notes=notes)
 
 
 class TestPersonLocationResource:
@@ -26,7 +29,7 @@ class TestPersonLocationResource:
             results = client.get(f"/api/{BASE_ROUTE}", follow_redirects=True).get_json()
             expected = (
                 PersonLocationSchema(many=True)
-                .dump(
+                    .dump(
                     [
                         make_personlocation(),
                         make_personlocation(PeoplePersonId=20),
@@ -42,12 +45,14 @@ class TestPersonLocationResource:
     )
     def test_post(self, client: FlaskClient):  # noqa
         with client:
-
-            payload = dict(PeoplePersonId=1, LocationsLocationsId=1, SubAddress="test", LocationUsage="test", Notes="test")
+            payload = dict(PeoplePersonId=1, LocationsLocationsId=1, SubAddress="test", LocationUsage="test",
+                           Notes="test")
             result = client.post(f"/api/{BASE_ROUTE}/", json=payload).get_json()
             expected = (
                 PersonLocationSchema()
-                .dump(PersonLocation(PeoplePersonId=payload[1], LocationsLocationsId=payload[1], SubAddress=payload["test"], LocationUsage=payload["test"], Notes=payload["test"]))
+                    .dump(PersonLocation(PeoplePersonId=payload[1], LocationsLocationsId=payload[1],
+                                         SubAddress=payload["test"], LocationUsage=payload["test"],
+                                         Notes=payload["test"]))
 
             )
             assert result == expected
@@ -68,4 +73,3 @@ class TestPersonLocationIdResource:
             result = client.delete(f"/api/{BASE_ROUTE}/123").get_json()
             expected = dict(status="Success", id=123)
             assert result == expected
-

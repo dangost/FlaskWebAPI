@@ -17,6 +17,3 @@ class PersonSchema(Schema):
     CultureCode = fields.Integer(attribute="CultureCode")
 
     Gender = fields.String(attribute="Gender")
-
-
-

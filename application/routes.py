@@ -16,7 +16,7 @@ def register_routes(api, app, root="api"):
     from application.entities.restrictedinfo import register_routes as attach_restrictedinfo
     from application.entities.warehouses import register_routes as attach_warehouses
 
-    #add routes
+    # add routes
     attach_countries(api, api)
     attach_customers(api, api)
     attach_customercompanies(api, api)
@@ -33,4 +33,3 @@ def register_routes(api, app, root="api"):
     attach_products(api, api)
     attach_restrictedinfo(api, api)
     attach_warehouses(api, api)
-

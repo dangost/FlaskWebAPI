@@ -1,24 +1,24 @@
 from flask import request
+from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
-from flask.wrappers import Response
 from typing import List
 
+from .interface import WarehouseInterface
+from .model import Warehouse
 from .schema import WarehouseSchema
 from .service import WarehousesService
-from .model import Warehouse
-from .interface import WarehouseInterface
 
 api = Namespace("Warehouse", description="Single namespace, single entity")
 
 service = WarehousesService
+
 
 @api.route("/")
 class WarehouseResource(Resource):
 
     @responds(schema=WarehouseSchema(many=True))
     def get(self) -> List[Warehouse]:
-        
         return service.get_all(self)
 
     @accepts(schema=WarehouseSchema, api=api)
@@ -44,8 +44,6 @@ class WarehouseIdResource(Resource):
     @accepts(schema=WarehouseSchema, api=api)
     @responds(schema=WarehouseSchema)
     def put(self, WarehouseId: int) -> Warehouse:
-
         changes: WarehouseInterface = request.parsed_obj
         warehouse = service.get_by_id(self, WarehouseId)
         return service.update(self, warehouse, changes)
-

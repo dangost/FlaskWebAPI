@@ -1,15 +1,17 @@
-from unittest.mock import patch
 from flask.testing import FlaskClient
-from .service import EmploymentJobsService
-from .schema import EmploymentJobsSchema
-from .model import EmploymentJobs
+from unittest.mock import patch
+
 from . import BASE_ROUTE
+from .model import EmploymentJobs
+from .schema import EmploymentJobsSchema
+from .service import EmploymentJobsService
 
 
 def make_employmentjobs(
-    hrjobid: int = 1, countriescountryid: int = 1, jobtitle:str = "test", minsalary: int = 1, maxsalary: int = 1
+        hrjobid: int = 1, countriescountryid: int = 1, jobtitle: str = "test", minsalary: int = 1, maxsalary: int = 1
 ) -> EmploymentJobs:
-    return EmploymentJobs(HRJobId=hrjobid, CountriesCountryId=countriescountryid, JobTitle=jobtitle, MinSalary=minsalary, MaxSalary=maxsalary)
+    return EmploymentJobs(HRJobId=hrjobid, CountriesCountryId=countriescountryid, JobTitle=jobtitle,
+                          MinSalary=minsalary, MaxSalary=maxsalary)
 
 
 class TestEmploymentJobsResource:
@@ -26,7 +28,7 @@ class TestEmploymentJobsResource:
             results = client.get(f"/api/{BASE_ROUTE}", follow_redirects=True).get_json()
             expected = (
                 EmploymentJobsSchema(many=True)
-                .dump(
+                    .dump(
                     [
                         make_employmentjobs(),
                         make_employmentjobs(HRJobId=20),
@@ -42,12 +44,12 @@ class TestEmploymentJobsResource:
     )
     def test_post(self, client: FlaskClient):  # noqa
         with client:
-
             payload = dict(CountriesCountryId=1, JobTitle="test", MinSalary=1, MaxSalary=1)
             result = client.post(f"/api/{BASE_ROUTE}/", json=payload).get_json()
             expected = (
                 EmploymentJobsSchema()
-                .dump(EmploymentJobs(CountriesCountryId=payload[1], JobTitle=payload["test"], MinSalary=payload[1], MaxSalary=payload[1]))
+                    .dump(EmploymentJobs(CountriesCountryId=payload[1], JobTitle=payload["test"], MinSalary=payload[1],
+                                         MaxSalary=payload[1]))
 
             )
             assert result == expected
@@ -68,4 +70,3 @@ class TestEmploymentJobsIdResource:
             result = client.delete(f"/api/{BASE_ROUTE}/123").get_json()
             expected = dict(status="Success", id=123)
             assert result == expected
-

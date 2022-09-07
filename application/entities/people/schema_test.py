@@ -1,8 +1,8 @@
 from pytest import fixture
 
+from .interface import PersonInterface
 from .model import Person
 from .schema import PersonSchema
-from .interface import PersonInterface
 
 
 @fixture
@@ -16,7 +16,8 @@ def test_PersonSchema_create(schema: PersonSchema):
 
 def test_PersonSchema_works(schema: PersonSchema):
     params: PersonInterface = schema.load(
-        {"FirstName": "test", "LastName": "test", "MiddleName": "test", "Nickname": "test", "NatLangCode": 1, "CultureCode": 1, "Gender": "test"}
+        {"FirstName": "test", "LastName": "test", "MiddleName": "test", "Nickname": "test", "NatLangCode": 1,
+         "CultureCode": 1, "Gender": "test"}
     )
     person = Person(**params)
 
@@ -27,5 +28,3 @@ def test_PersonSchema_works(schema: PersonSchema):
     assert person.NatLangCode == 1
     assert person.CultureCode == 1
     assert person.Gender == "test"
-
-

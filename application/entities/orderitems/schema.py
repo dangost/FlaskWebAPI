@@ -11,6 +11,3 @@ class OrderItemSchema(Schema):
     UnitPrice = fields.Integer(attribute="UnitPrice")
 
     Quantity = fields.Integer(attribute="Quantity")
-
-
-

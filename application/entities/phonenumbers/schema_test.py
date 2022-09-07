@@ -1,8 +1,8 @@
 from pytest import fixture
 
+from .interface import PhoneNumberInterface
 from .model import PhoneNumber
 from .schema import PhoneNumberSchema
-from .interface import PhoneNumberInterface
 
 
 @fixture
@@ -25,5 +25,3 @@ def test_PhoneNumberSchema_works(schema: PhoneNumberSchema):
     assert phonenumber.PhoneNumber == 1
     assert phonenumber.CountryCode == 1
     assert phonenumber.PhoneType == 1
-
-

@@ -1,6 +1,7 @@
 from pytest import fixture
-from .model import Inventory
+
 from .interface import InventoryInterface
+from .model import Inventory
 
 
 @fixture
@@ -15,4 +16,3 @@ def test_InventoryInterface_create(interface: InventoryInterface):
 def test_InventoryInterface_works(interface: InventoryInterface):
     inventory = Inventory(**interface)
     assert inventory
-

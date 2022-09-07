@@ -1,24 +1,24 @@
 from flask import request
+from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
-from flask.wrappers import Response
 from typing import List
 
+from .interface import PersonLocationInterface
+from .model import PersonLocation
 from .schema import PersonLocationSchema
 from .service import PersonLocationsService
-from .model import PersonLocation
-from .interface import PersonLocationInterface
 
 api = Namespace("PersonLocation", description="Single namespace, single entity")
 
 service = PersonLocationsService
+
 
 @api.route("/")
 class PersonLocationResource(Resource):
 
     @responds(schema=PersonLocationSchema(many=True))
     def get(self) -> List[PersonLocation]:
-        
         return service.get_all(self)
 
     @accepts(schema=PersonLocationSchema, api=api)
@@ -44,8 +44,6 @@ class PersonLocationIdResource(Resource):
     @accepts(schema=PersonLocationSchema, api=api)
     @responds(schema=PersonLocationSchema)
     def put(self, PeoplePersonId: int) -> PersonLocation:
-
         changes: PersonLocationInterface = request.parsed_obj
         personlocation = service.get_by_id(self, PeoplePersonId)
         return service.update(self, personlocation, changes)
-

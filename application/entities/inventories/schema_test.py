@@ -1,8 +1,8 @@
 from pytest import fixture
 
+from .interface import InventoryInterface
 from .model import Inventory
 from .schema import InventorySchema
-from .interface import InventoryInterface
 
 
 @fixture
@@ -24,5 +24,3 @@ def test_InventorySchema_works(schema: InventorySchema):
     assert inventory.WarehouseId == 1
     assert inventory.QuantityOnHand == 1
     assert inventory.QuantityAvailable == 1
-
-

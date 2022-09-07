@@ -11,6 +11,3 @@ class EmploymentJobsInterface(TypedDict, total=False):
     MinSalary: int
 
     MaxSalary: int
-
-
-

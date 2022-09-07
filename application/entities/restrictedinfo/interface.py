@@ -15,6 +15,3 @@ class RestrictedInfoInterface(TypedDict, total=False):
     HireDire: str
 
     SeniorityCode: int
-
-
-

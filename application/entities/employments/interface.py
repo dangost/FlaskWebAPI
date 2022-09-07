@@ -19,6 +19,3 @@ class EmploymentInterface(TypedDict, total=False):
     CommissionPercent: int
 
     EmploymentCol: str
-
-
-

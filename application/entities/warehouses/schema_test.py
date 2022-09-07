@@ -1,8 +1,8 @@
 from pytest import fixture
 
+from .interface import WarehouseInterface
 from .model import Warehouse
 from .schema import WarehouseSchema
-from .interface import WarehouseInterface
 
 
 @fixture
@@ -23,5 +23,3 @@ def test_WarehouseSchema_works(schema: WarehouseSchema):
     assert warehouse.WarehouseId == 1
     assert warehouse.LocationId == 1
     assert warehouse.WarehouseName == "test"
-
-

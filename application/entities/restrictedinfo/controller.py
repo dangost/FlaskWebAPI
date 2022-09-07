@@ -1,24 +1,24 @@
 from flask import request
+from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
-from flask.wrappers import Response
 from typing import List
 
+from .interface import RestrictedInfoInterface
+from .model import RestrictedInfo
 from .schema import RestrictedInfoSchema
 from .service import RestrictedInfoService
-from .model import RestrictedInfo
-from .interface import RestrictedInfoInterface
 
 api = Namespace("RestrictedInfo", description="Single namespace, single entity")
 
 service = RestrictedInfoService
+
 
 @api.route("/")
 class RestrictedInfoResource(Resource):
 
     @responds(schema=RestrictedInfoSchema(many=True))
     def get(self) -> List[RestrictedInfo]:
-        
         return service.get_all(self)
 
     @accepts(schema=RestrictedInfoSchema, api=api)
@@ -44,8 +44,6 @@ class RestrictedInfoIdResource(Resource):
     @accepts(schema=RestrictedInfoSchema, api=api)
     @responds(schema=RestrictedInfoSchema)
     def put(self, PersonId: int) -> RestrictedInfo:
-
         changes: RestrictedInfoInterface = request.parsed_obj
         restrictedinfo = service.get_by_id(self, PersonId)
         return service.update(self, restrictedinfo, changes)
-

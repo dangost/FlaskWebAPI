@@ -25,6 +25,3 @@ class LocationInterface(TypedDict, total=False):
     ShippingNotes: str
 
     CountriesCountryId: int
-
-
-

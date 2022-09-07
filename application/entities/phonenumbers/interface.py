@@ -13,6 +13,3 @@ class PhoneNumberInterface(TypedDict, total=False):
     CountryCode: int
 
     PhoneType: int
-
-
-

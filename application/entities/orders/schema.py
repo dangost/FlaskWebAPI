@@ -19,6 +19,3 @@ class OrdersSchema(Schema):
     OrderCurrency = fields.String(attribute="OrderCurrency")
 
     PromotionCode = fields.String(attribute="PromotionCode")
-
-
-

@@ -1,8 +1,8 @@
 from pytest import fixture
 
+from .interface import EmploymentJobsInterface
 from .model import EmploymentJobs
 from .schema import EmploymentJobsSchema
-from .interface import EmploymentJobsInterface
 
 
 @fixture
@@ -24,5 +24,3 @@ def test_EmploymentJobsSchema_works(schema: EmploymentJobsSchema):
     assert employmentjobs.JobTitle == "test"
     assert employmentjobs.MinSalary == 1
     assert employmentjobs.MaxSalary == 1
-
-

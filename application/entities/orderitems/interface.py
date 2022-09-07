@@ -11,6 +11,3 @@ class OrderItemInterface(TypedDict, total=False):
     UnitPrice: int
 
     Quantity: int
-
-
-

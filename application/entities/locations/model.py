@@ -1,10 +1,10 @@
 from sqlalchemy import Integer, Column, String, ForeignKey
+
 from application import db
 from .interface import LocationInterface
 
 
 class Location(db.Model):
-
     __tablename__ = "Locations"
 
     LocationId = Column(Integer(), primary_key=True)
@@ -20,12 +20,8 @@ class Location(db.Model):
     ShippingNotes = Column(String(255))
     CountriesCountryId = Column(Integer())
 
-
     def update(self, changes: LocationInterface):
         for key, val in changes.items():
             setattr(self, key, val)
 
         return self
-
-
-

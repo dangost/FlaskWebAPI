@@ -1,7 +1,8 @@
-from application import db
 from typing import List
-from .model import Product
+
+from application import db
 from .interface import ProductInterface
+from .model import Product
 
 
 class ProductsService:
@@ -25,9 +26,13 @@ class ProductsService:
         return [product_id]
 
     def create(self, new_attrs: ProductInterface) -> Product:
-        new_product = Product(ProductName=new_attrs["ProductName"],  Description=new_attrs["Description"],  Category=new_attrs["Category"],  WeightClass=new_attrs["WeightClass"],  WarrantyPeriod=new_attrs["WarrantyPeriod"],  SupplierId=new_attrs["SupplierId"],  Status=new_attrs["Status"],  ListPrice=new_attrs["ListPrice"],  MinimumPrice=new_attrs["MinimumPrice"],  PriceCurrency=new_attrs["PriceCurrency"],  CatalogURL=new_attrs["CatalogURL"])
+        new_product = Product(ProductName=new_attrs["ProductName"], Description=new_attrs["Description"],
+                              Category=new_attrs["Category"], WeightClass=new_attrs["WeightClass"],
+                              WarrantyPeriod=new_attrs["WarrantyPeriod"], SupplierId=new_attrs["SupplierId"],
+                              Status=new_attrs["Status"], ListPrice=new_attrs["ListPrice"],
+                              MinimumPrice=new_attrs["MinimumPrice"], PriceCurrency=new_attrs["PriceCurrency"],
+                              CatalogURL=new_attrs["CatalogURL"])
         db.session.add(new_product)
         db.session.commit()
 
         return new_product
-

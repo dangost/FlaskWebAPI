@@ -11,6 +11,3 @@ class CountrySchema(Schema):
     NatLangCode = fields.Integer(attribute="NatLangCode")
 
     CurrencyCode = fields.String(attribute="CurrencyCode")
-
-
-

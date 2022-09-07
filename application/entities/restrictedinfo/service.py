@@ -1,7 +1,8 @@
-from application import db
 from typing import List
-from .model import RestrictedInfo
+
+from application import db
 from .interface import RestrictedInfoInterface
+from .model import RestrictedInfo
 
 
 class RestrictedInfoService:
@@ -11,7 +12,8 @@ class RestrictedInfoService:
     def get_by_id(self, restrictedinfo_id: int) -> RestrictedInfo:
         return RestrictedInfo.query.get(restrictedinfo_id)
 
-    def update(self, restrictedinfo: RestrictedInfo, restrictedinfo_change_updates: RestrictedInfoInterface) -> RestrictedInfo:
+    def update(self, restrictedinfo: RestrictedInfo,
+               restrictedinfo_change_updates: RestrictedInfoInterface) -> RestrictedInfo:
         restrictedinfo.update(restrictedinfo_change_updates)
         db.session.commit()
         return restrictedinfo
@@ -25,9 +27,11 @@ class RestrictedInfoService:
         return [restrictedinfo_id]
 
     def create(self, new_attrs: RestrictedInfoInterface) -> RestrictedInfo:
-        new_restrictedinfo = RestrictedInfo(PersonId=new_attrs["PersonId"],  DateOfBirth=new_attrs["DateOfBirth"],  DateOfDeath=new_attrs["DateOfDeath"],  GovernmentId=new_attrs["GovernmentId"],  PassportId=new_attrs["PassportId"],  HireDire=new_attrs["HireDire"],  SeniorityCode=new_attrs["SeniorityCode"])
+        new_restrictedinfo = RestrictedInfo(PersonId=new_attrs["PersonId"], DateOfBirth=new_attrs["DateOfBirth"],
+                                            DateOfDeath=new_attrs["DateOfDeath"],
+                                            GovernmentId=new_attrs["GovernmentId"], PassportId=new_attrs["PassportId"],
+                                            HireDire=new_attrs["HireDire"], SeniorityCode=new_attrs["SeniorityCode"])
         db.session.add(new_restrictedinfo)
         db.session.commit()
 
         return new_restrictedinfo
-

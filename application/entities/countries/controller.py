@@ -1,24 +1,24 @@
 from flask import request
+from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
-from flask.wrappers import Response
 from typing import List
 
+from .interface import CountryInterface
+from .model import Country
 from .schema import CountrySchema
 from .service import CountriesService
-from .model import Country
-from .interface import CountryInterface
 
 api = Namespace("Country", description="Single namespace, single entity")
 
 service = CountriesService
+
 
 @api.route("/")
 class CountryResource(Resource):
 
     @responds(schema=CountrySchema(many=True))
     def get(self) -> List[Country]:
-        
         return service.get_all(self)
 
     @accepts(schema=CountrySchema, api=api)
@@ -44,8 +44,6 @@ class CountryIdResource(Resource):
     @accepts(schema=CountrySchema, api=api)
     @responds(schema=CountrySchema)
     def put(self, CountryId: int) -> Country:
-
         changes: CountryInterface = request.parsed_obj
         country = service.get_by_id(self, CountryId)
         return service.update(self, country, changes)
-

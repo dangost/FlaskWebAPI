@@ -1,13 +1,18 @@
 from flask_sqlalchemy import SQLAlchemy
 from typing import List
+
+from .interface import ProductInterface
 from .model import Product
 from .service import ProductsService  # noqa
-from .interface import ProductInterface
 
 
 def test_get_all(db: SQLAlchemy):  # noqa
-    yin: Product = Product(ProductId=16, ProductName="test16", Description="test16", Category=16, WeightClass="test16", WarrantyPeriod=16, SupplierId=16, Status="test16", ListPrice=16, MinimumPrice=16, PriceCurrency="test16", CatalogURL="test16")
-    yang: Product = Product(ProductId=16, ProductName="test16", Description="test16", Category=16, WeightClass="test16", WarrantyPeriod=16, SupplierId=16, Status="test16", ListPrice=16, MinimumPrice=16, PriceCurrency="test16", CatalogURL="test16")
+    yin: Product = Product(ProductId=16, ProductName="test16", Description="test16", Category=16, WeightClass="test16",
+                           WarrantyPeriod=16, SupplierId=16, Status="test16", ListPrice=16, MinimumPrice=16,
+                           PriceCurrency="test16", CatalogURL="test16")
+    yang: Product = Product(ProductId=16, ProductName="test16", Description="test16", Category=16, WeightClass="test16",
+                            WarrantyPeriod=16, SupplierId=16, Status="test16", ListPrice=16, MinimumPrice=16,
+                            PriceCurrency="test16", CatalogURL="test16")
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -19,8 +24,12 @@ def test_get_all(db: SQLAlchemy):  # noqa
 
 
 def test_delete_by_id(db: SQLAlchemy):  # noqa
-    yin: Product = Product(ProductId=16, ProductName="test16", Description="test16", Category=16, WeightClass="test16", WarrantyPeriod=16, SupplierId=16, Status="test16", ListPrice=16, MinimumPrice=16, PriceCurrency="test16", CatalogURL="test16")
-    yang: Product = Product(ProductId=16, ProductName="test16", Description="test16", Category=16, WeightClass="test16", WarrantyPeriod=16, SupplierId=16, Status="test16", ListPrice=16, MinimumPrice=16, PriceCurrency="test16", CatalogURL="test16")
+    yin: Product = Product(ProductId=16, ProductName="test16", Description="test16", Category=16, WeightClass="test16",
+                           WarrantyPeriod=16, SupplierId=16, Status="test16", ListPrice=16, MinimumPrice=16,
+                           PriceCurrency="test16", CatalogURL="test16")
+    yang: Product = Product(ProductId=16, ProductName="test16", Description="test16", Category=16, WeightClass="test16",
+                            WarrantyPeriod=16, SupplierId=16, Status="test16", ListPrice=16, MinimumPrice=16,
+                            PriceCurrency="test16", CatalogURL="test16")
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -44,5 +53,3 @@ def test_create(db: SQLAlchemy):  # noqa
 
     for k in yin.keys():
         assert getattr(results[0], k) == yin[k]
-
-

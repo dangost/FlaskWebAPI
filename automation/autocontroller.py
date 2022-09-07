@@ -5,7 +5,8 @@ list_names = ["Countries", "Customers", "CustomerCompanies", "CustomerEmployees"
               "Inventories", "Locations", "OrderItems", "Orders", "People", "PersonLocations", "PhoneNumbers",
               "Products", "RestrictedInfo", "Warehouses"]
 id_names = ["CountryId", "CustomerId", "CompanyId", "CustomerEmployeeId", "EmployeeID", "HRJobId", "InventoryId",
-            "LocationId", "OrderItemId", "OrderId", "Id", "PeoplePersonId", "PhoneNumberId", "ProductId", "PersonId", "WarehouseId"]
+            "LocationId", "OrderItemId", "OrderId", "Id", "PeoplePersonId", "PhoneNumberId", "ProductId", "PersonId",
+            "WarehouseId"]
 base = [
     {"CountryName": "string", "CountryCode": "string", "NatLangCode": "int", "CurrencyCode": "string"},
     {"CustomerId": "int", "PersonId": "int", "CustomEmployeeId": "int", "AccountMgrId": "int", "IncomeLevel": "int"},
@@ -24,13 +25,15 @@ base = [
      "OrderTotal": "int", "OrderCurrency": "string", "PromotionCode": "string"},
     {"FirstName": "string", "LastName": "string", "MiddleName": "string", "Nickname": "string", "NatLangCode": "int",
      "CultureCode": "int", "Gender": "string"},
-    {"PeoplePersonId": "int", "LocationsLocationsId": "int", "SubAddress": "string", "LocationUsage": "string", "Notes": "string"},
+    {"PeoplePersonId": "int", "LocationsLocationsId": "int", "SubAddress": "string", "LocationUsage": "string",
+     "Notes": "string"},
     {"PeoplePersonId": "int", "LocationLocationId": "int", "PhoneNumber": "int", "CountryCode": "int",
      "PhoneType": "int"},
     {"ProductName": "string", "Description": "string", "Category": "int", "WeightClass": "string",
      "WarrantyPeriod": "int", "SupplierId": "int", "Status": "string", "ListPrice": "int", "MinimumPrice": "int",
      "PriceCurrency": "string", "CatalogURL": "string"},
-    {"PersonId": "int", "DateOfBirth": "string", "DateOfDeath": "string", "GovernmentId": "string", "PassportId": "string",
+    {"PersonId": "int", "DateOfBirth": "string", "DateOfDeath": "string", "GovernmentId": "string",
+     "PassportId": "string",
      "HireDire": "string", "SeniorityCode": "int"},
     {"WarehouseId": "int", "LocationId": "int", "WarehouseName": "string"}
 ]
@@ -38,6 +41,7 @@ base = [
 path = r"D:\Projects\Regula\Web\FlaskWebAPI\application\entities"
 
 import os
+
 for i in range(len(class_names)):
     folder_path = path + "\\" + list_names[i].lower()
 
@@ -45,23 +49,23 @@ for i in range(len(class_names)):
         os.mkdir(folder_path)
     except BaseException:
         pass
-    new_path = folder_path+"\\controller_test.py"
+    new_path = folder_path + "\\controller_test.py"
     file = open(new_path, 'w')
 
     temp = '''from unittest.mock import patch
 from flask.testing import FlaskClient
 
 from app.test.fixtures import client, app  # noqa
-from .service import '''+class_names[i]+'''Service
-from .schema import '''+class_names[i]+'''Schema
-from .model import '''+class_names[i]+'''
-from .interface import '''+class_names[i]+'''Interface
+from .service import ''' + class_names[i] + '''Service
+from .schema import ''' + class_names[i] + '''Schema
+from .model import ''' + class_names[i] + '''
+from .interface import ''' + class_names[i] + '''Interface
 from . import BASE_ROUTE
 
 
 def make_widget(
     id: int = 123, name: str = "Test widget", purpose: str = "Test purpose"
-) -> '''+class_names[i]+''':
+) -> ''' + class_names[i] + ''':
     return Widget(widget_id=id, name=name, purpose=purpose)
 
 

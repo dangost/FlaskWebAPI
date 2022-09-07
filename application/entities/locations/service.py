@@ -1,7 +1,8 @@
-from application import db
 from typing import List
-from .model import Location
+
+from application import db
 from .interface import LocationInterface
+from .model import Location
 
 
 class LocationsService:
@@ -25,9 +26,13 @@ class LocationsService:
         return [location_id]
 
     def create(self, new_attrs: LocationInterface) -> Location:
-        new_location = Location(CountryId=new_attrs["CountryId"],  AddressLine1=new_attrs["AddressLine1"],  AddressLine2=new_attrs["AddressLine2"],  City=new_attrs["City"],  State=new_attrs["State"],  District=new_attrs["District"],  PostalCode=new_attrs["PostalCode"],  LocationTypeCode=new_attrs["LocationTypeCode"],  Description=new_attrs["Description"],  ShippingNotes=new_attrs["ShippingNotes"],  CountriesCountryId=new_attrs["CountriesCountryId"])
+        new_location = Location(CountryId=new_attrs["CountryId"], AddressLine1=new_attrs["AddressLine1"],
+                                AddressLine2=new_attrs["AddressLine2"], City=new_attrs["City"],
+                                State=new_attrs["State"], District=new_attrs["District"],
+                                PostalCode=new_attrs["PostalCode"], LocationTypeCode=new_attrs["LocationTypeCode"],
+                                Description=new_attrs["Description"], ShippingNotes=new_attrs["ShippingNotes"],
+                                CountriesCountryId=new_attrs["CountriesCountryId"])
         db.session.add(new_location)
         db.session.commit()
 
         return new_location
-

@@ -4,7 +4,6 @@ from application import db
 from application.entities.countries import Country
 
 
-
 def seed_things():
     classes = []
     for klass in classes:
@@ -25,10 +24,10 @@ class SeedCommand(Command):
 
     def run(self):
         if (
-            input(
-                "Are you sure you want to drop all tables and recreate? (Y/N)\n"
-            ).lower()
-            == "y"
+                input(
+                    "Are you sure you want to drop all tables and recreate? (Y/N)\n"
+                ).lower()
+                == "y"
         ):
             print("Dropping tables...")
             db.drop_all()

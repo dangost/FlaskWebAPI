@@ -19,6 +19,3 @@ class EmploymentSchema(Schema):
     CommissionPercent = fields.Integer(attribute="CommissionPercent")
 
     EmploymentCol = fields.String(attribute="EmploymentCol")
-
-
-

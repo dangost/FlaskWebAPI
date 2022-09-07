@@ -1,13 +1,14 @@
-from unittest.mock import patch
 from flask.testing import FlaskClient
-from .service import WarehousesService
-from .schema import WarehouseSchema
-from .model import Warehouse
+from unittest.mock import patch
+
 from . import BASE_ROUTE
+from .model import Warehouse
+from .schema import WarehouseSchema
+from .service import WarehousesService
 
 
 def make_warehouse(
-    warehouseid: int = 1, locationid: int = 1, warehousename:str = "test"
+        warehouseid: int = 1, locationid: int = 1, warehousename: str = "test"
 ) -> Warehouse:
     return Warehouse(WarehouseId=warehouseid, LocationId=locationid, WarehouseName=warehousename)
 
@@ -26,7 +27,7 @@ class TestWarehouseResource:
             results = client.get(f"/api/{BASE_ROUTE}", follow_redirects=True).get_json()
             expected = (
                 WarehouseSchema(many=True)
-                .dump(
+                    .dump(
                     [
                         make_warehouse(),
                         make_warehouse(WarehouseId=20),
@@ -42,12 +43,11 @@ class TestWarehouseResource:
     )
     def test_post(self, client: FlaskClient):  # noqa
         with client:
-
             payload = dict(WarehouseId=1, LocationId=1, WarehouseName="test")
             result = client.post(f"/api/{BASE_ROUTE}/", json=payload).get_json()
             expected = (
                 WarehouseSchema()
-                .dump(Warehouse(WarehouseId=payload[1], LocationId=payload[1], WarehouseName=payload["test"]))
+                    .dump(Warehouse(WarehouseId=payload[1], LocationId=payload[1], WarehouseName=payload["test"]))
 
             )
             assert result == expected
@@ -68,4 +68,3 @@ class TestWarehouseIdResource:
             result = client.delete(f"/api/{BASE_ROUTE}/123").get_json()
             expected = dict(status="Success", id=123)
             assert result == expected
-

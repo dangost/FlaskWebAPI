@@ -1,24 +1,24 @@
 from flask import request
+from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
-from flask.wrappers import Response
 from typing import List
 
+from .interface import CustomerCompanyInterface
+from .model import CustomerCompany
 from .schema import CustomerCompanySchema
 from .service import CustomerCompaniesService
-from .model import CustomerCompany
-from .interface import CustomerCompanyInterface
 
 api = Namespace("CustomerCompany", description="Single namespace, single entity")
 
 service = CustomerCompaniesService
+
 
 @api.route("/")
 class CustomerCompanyResource(Resource):
 
     @responds(schema=CustomerCompanySchema(many=True))
     def get(self) -> List[CustomerCompany]:
-        
         return service.get_all(self)
 
     @accepts(schema=CustomerCompanySchema, api=api)
@@ -44,8 +44,6 @@ class CustomerCompanyIdResource(Resource):
     @accepts(schema=CustomerCompanySchema, api=api)
     @responds(schema=CustomerCompanySchema)
     def put(self, CompanyId: int) -> CustomerCompany:
-
         changes: CustomerCompanyInterface = request.parsed_obj
         customercompany = service.get_by_id(self, CompanyId)
         return service.update(self, customercompany, changes)
-

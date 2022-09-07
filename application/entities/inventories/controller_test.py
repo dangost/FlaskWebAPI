@@ -1,15 +1,18 @@
-from unittest.mock import patch
 from flask.testing import FlaskClient
-from .service import InventoriesService
-from .schema import InventorySchema
-from .model import Inventory
+from unittest.mock import patch
+
 from . import BASE_ROUTE
+from .model import Inventory
+from .schema import InventorySchema
+from .service import InventoriesService
 
 
 def make_inventory(
-    inventoryid: int = 1, productid: int = 1, warehouseid: int = 1, quantityonhand: int = 1, quantityavailable: int = 1
+        inventoryid: int = 1, productid: int = 1, warehouseid: int = 1, quantityonhand: int = 1,
+        quantityavailable: int = 1
 ) -> Inventory:
-    return Inventory(InventoryId=inventoryid, ProductId=productid, WarehouseId=warehouseid, QuantityOnHand=quantityonhand, QuantityAvailable=quantityavailable)
+    return Inventory(InventoryId=inventoryid, ProductId=productid, WarehouseId=warehouseid,
+                     QuantityOnHand=quantityonhand, QuantityAvailable=quantityavailable)
 
 
 class TestInventoryResource:
@@ -26,7 +29,7 @@ class TestInventoryResource:
             results = client.get(f"/api/{BASE_ROUTE}", follow_redirects=True).get_json()
             expected = (
                 InventorySchema(many=True)
-                .dump(
+                    .dump(
                     [
                         make_inventory(),
                         make_inventory(InventoryId=20),
@@ -42,12 +45,12 @@ class TestInventoryResource:
     )
     def test_post(self, client: FlaskClient):  # noqa
         with client:
-
             payload = dict(ProductId=1, WarehouseId=1, QuantityOnHand=1, QuantityAvailable=1)
             result = client.post(f"/api/{BASE_ROUTE}/", json=payload).get_json()
             expected = (
                 InventorySchema()
-                .dump(Inventory(ProductId=payload[1], WarehouseId=payload[1], QuantityOnHand=payload[1], QuantityAvailable=payload[1]))
+                    .dump(Inventory(ProductId=payload[1], WarehouseId=payload[1], QuantityOnHand=payload[1],
+                                    QuantityAvailable=payload[1]))
 
             )
             assert result == expected
@@ -68,4 +71,3 @@ class TestInventoryIdResource:
             result = client.delete(f"/api/{BASE_ROUTE}/123").get_json()
             expected = dict(status="Success", id=123)
             assert result == expected
-

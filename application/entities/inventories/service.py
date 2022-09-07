@@ -1,7 +1,8 @@
-from application import db
 from typing import List
-from .model import Inventory
+
+from application import db
 from .interface import InventoryInterface
+from .model import Inventory
 
 
 class InventoriesService:
@@ -25,9 +26,10 @@ class InventoriesService:
         return [inventory_id]
 
     def create(self, new_attrs: InventoryInterface) -> Inventory:
-        new_inventory = Inventory(ProductId=new_attrs["ProductId"],  WarehouseId=new_attrs["WarehouseId"],  QuantityOnHand=new_attrs["QuantityOnHand"],  QuantityAvailable=new_attrs["QuantityAvailable"])
+        new_inventory = Inventory(ProductId=new_attrs["ProductId"], WarehouseId=new_attrs["WarehouseId"],
+                                  QuantityOnHand=new_attrs["QuantityOnHand"],
+                                  QuantityAvailable=new_attrs["QuantityAvailable"])
         db.session.add(new_inventory)
         db.session.commit()
 
         return new_inventory
-

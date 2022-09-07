@@ -11,6 +11,3 @@ class CustomerSchema(Schema):
     AccountMgrId = fields.Integer(attribute="AccountMgrId")
 
     IncomeLevel = fields.Integer(attribute="IncomeLevel")
-
-
-

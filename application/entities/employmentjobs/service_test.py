@@ -1,13 +1,16 @@
 from flask_sqlalchemy import SQLAlchemy
 from typing import List
+
+from .interface import EmploymentJobsInterface
 from .model import EmploymentJobs
 from .service import EmploymentJobsService  # noqa
-from .interface import EmploymentJobsInterface
 
 
 def test_get_all(db: SQLAlchemy):  # noqa
-    yin: EmploymentJobs = EmploymentJobs(HRJobId=16, CountriesCountryId=16, JobTitle="test16", MinSalary=16, MaxSalary=16)
-    yang: EmploymentJobs = EmploymentJobs(HRJobId=16, CountriesCountryId=16, JobTitle="test16", MinSalary=16, MaxSalary=16)
+    yin: EmploymentJobs = EmploymentJobs(HRJobId=16, CountriesCountryId=16, JobTitle="test16", MinSalary=16,
+                                         MaxSalary=16)
+    yang: EmploymentJobs = EmploymentJobs(HRJobId=16, CountriesCountryId=16, JobTitle="test16", MinSalary=16,
+                                          MaxSalary=16)
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -19,8 +22,10 @@ def test_get_all(db: SQLAlchemy):  # noqa
 
 
 def test_delete_by_id(db: SQLAlchemy):  # noqa
-    yin: EmploymentJobs = EmploymentJobs(HRJobId=16, CountriesCountryId=16, JobTitle="test16", MinSalary=16, MaxSalary=16)
-    yang: EmploymentJobs = EmploymentJobs(HRJobId=16, CountriesCountryId=16, JobTitle="test16", MinSalary=16, MaxSalary=16)
+    yin: EmploymentJobs = EmploymentJobs(HRJobId=16, CountriesCountryId=16, JobTitle="test16", MinSalary=16,
+                                         MaxSalary=16)
+    yang: EmploymentJobs = EmploymentJobs(HRJobId=16, CountriesCountryId=16, JobTitle="test16", MinSalary=16,
+                                          MaxSalary=16)
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -44,5 +49,3 @@ def test_create(db: SQLAlchemy):  # noqa
 
     for k in yin.keys():
         assert getattr(results[0], k) == yin[k]
-
-

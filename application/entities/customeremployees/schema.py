@@ -15,6 +15,3 @@ class CustomerEmployeeSchema(Schema):
     CreditLimit = fields.Integer(attribute="CreditLimit")
 
     CreditLimitCurrency = fields.Integer(attribute="CreditLimitCurrency")
-
-
-

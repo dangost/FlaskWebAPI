@@ -17,6 +17,3 @@ class PersonInterface(TypedDict, total=False):
     CultureCode: int
 
     Gender: str
-
-
-

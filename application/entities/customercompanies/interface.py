@@ -9,6 +9,3 @@ class CustomerCompanyInterface(TypedDict, total=False):
     CompanyCreditLimit: str
 
     CreditLimitCurrency: str
-
-
-

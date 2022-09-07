@@ -1,7 +1,8 @@
-from application import db
 from typing import List
-from .model import CustomerCompany
+
+from application import db
 from .interface import CustomerCompanyInterface
+from .model import CustomerCompany
 
 
 class CustomerCompaniesService:
@@ -11,7 +12,8 @@ class CustomerCompaniesService:
     def get_by_id(self, customercompany_id: int) -> CustomerCompany:
         return CustomerCompany.query.get(customercompany_id)
 
-    def update(self, customercompany: CustomerCompany, customercompany_change_updates: CustomerCompanyInterface) -> CustomerCompany:
+    def update(self, customercompany: CustomerCompany,
+               customercompany_change_updates: CustomerCompanyInterface) -> CustomerCompany:
         customercompany.update(customercompany_change_updates)
         db.session.commit()
         return customercompany
@@ -25,9 +27,10 @@ class CustomerCompaniesService:
         return [customercompany_id]
 
     def create(self, new_attrs: CustomerCompanyInterface) -> CustomerCompany:
-        new_customercompany = CustomerCompany(CompanyName=new_attrs["CompanyName"],  CompanyCreditLimit=new_attrs["CompanyCreditLimit"],  CreditLimitCurrency=new_attrs["CreditLimitCurrency"])
+        new_customercompany = CustomerCompany(CompanyName=new_attrs["CompanyName"],
+                                              CompanyCreditLimit=new_attrs["CompanyCreditLimit"],
+                                              CreditLimitCurrency=new_attrs["CreditLimitCurrency"])
         db.session.add(new_customercompany)
         db.session.commit()
 
         return new_customercompany
-

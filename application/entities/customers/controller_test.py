@@ -1,15 +1,17 @@
-from unittest.mock import patch
 from flask.testing import FlaskClient
-from .service import CustomersService
-from .schema import CustomerSchema
-from .model import Customer
+from unittest.mock import patch
+
 from . import BASE_ROUTE
+from .model import Customer
+from .schema import CustomerSchema
+from .service import CustomersService
 
 
 def make_customer(
-    customerid: int = 1, personid: int = 1, customemployeeid: int = 1, accountmgrid: int = 1, incomelevel: int = 1
+        customerid: int = 1, personid: int = 1, customemployeeid: int = 1, accountmgrid: int = 1, incomelevel: int = 1
 ) -> Customer:
-    return Customer(CustomerId=customerid, PersonId=personid, CustomEmployeeId=customemployeeid, AccountMgrId=accountmgrid, IncomeLevel=incomelevel)
+    return Customer(CustomerId=customerid, PersonId=personid, CustomEmployeeId=customemployeeid,
+                    AccountMgrId=accountmgrid, IncomeLevel=incomelevel)
 
 
 class TestCustomerResource:
@@ -26,7 +28,7 @@ class TestCustomerResource:
             results = client.get(f"/api/{BASE_ROUTE}", follow_redirects=True).get_json()
             expected = (
                 CustomerSchema(many=True)
-                .dump(
+                    .dump(
                     [
                         make_customer(),
                         make_customer(CustomerId=20),
@@ -42,12 +44,12 @@ class TestCustomerResource:
     )
     def test_post(self, client: FlaskClient):  # noqa
         with client:
-
             payload = dict(CustomerId=1, PersonId=1, CustomEmployeeId=1, AccountMgrId=1, IncomeLevel=1)
             result = client.post(f"/api/{BASE_ROUTE}/", json=payload).get_json()
             expected = (
                 CustomerSchema()
-                .dump(Customer(CustomerId=payload[1], PersonId=payload[1], CustomEmployeeId=payload[1], AccountMgrId=payload[1], IncomeLevel=payload[1]))
+                    .dump(Customer(CustomerId=payload[1], PersonId=payload[1], CustomEmployeeId=payload[1],
+                                   AccountMgrId=payload[1], IncomeLevel=payload[1]))
 
             )
             assert result == expected
@@ -68,4 +70,3 @@ class TestCustomerIdResource:
             result = client.delete(f"/api/{BASE_ROUTE}/123").get_json()
             expected = dict(status="Success", id=123)
             assert result == expected
-

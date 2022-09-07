@@ -19,6 +19,3 @@ class OrdersInterface(TypedDict, total=False):
     OrderCurrency: str
 
     PromotionCode: str
-
-
-

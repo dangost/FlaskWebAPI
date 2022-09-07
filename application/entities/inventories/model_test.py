@@ -1,5 +1,6 @@
-from pytest import fixture
 from flask_sqlalchemy import SQLAlchemy
+from pytest import fixture
+
 from application.test.fixtures import app, db  # noqa
 from .model import Inventory
 
@@ -18,4 +19,3 @@ def test_Inventory_retrieve(inventory: Inventory, db: SQLAlchemy):  # noqa
     db.session.commit()
     s = Inventory.query.first()
     assert s.__dict__ == inventory.__dict__
-

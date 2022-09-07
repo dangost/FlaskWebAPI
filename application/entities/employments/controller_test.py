@@ -1,15 +1,19 @@
-from unittest.mock import patch
 from flask.testing import FlaskClient
-from .service import EmploymentsService
-from .schema import EmploymentSchema
-from .model import Employment
+from unittest.mock import patch
+
 from . import BASE_ROUTE
+from .model import Employment
+from .schema import EmploymentSchema
+from .service import EmploymentsService
 
 
 def make_employment(
-    employeeid: int = 1, personid: int = 1, hrjobid: int = 1, manageremployeeid: int = 1, startdate:str = "test", enddate:str = "test", salary:str = "test", commissionpercent: int = 1, employmentcol:str = "test"
+        employeeid: int = 1, personid: int = 1, hrjobid: int = 1, manageremployeeid: int = 1, startdate: str = "test",
+        enddate: str = "test", salary: str = "test", commissionpercent: int = 1, employmentcol: str = "test"
 ) -> Employment:
-    return Employment(EmployeeId=employeeid, PersonId=personid, HRJobId=hrjobid, ManagerEmployeeId=manageremployeeid, StartDate=startdate, EndDate=enddate, Salary=salary, CommissionPercent=commissionpercent, EmploymentCol=employmentcol)
+    return Employment(EmployeeId=employeeid, PersonId=personid, HRJobId=hrjobid, ManagerEmployeeId=manageremployeeid,
+                      StartDate=startdate, EndDate=enddate, Salary=salary, CommissionPercent=commissionpercent,
+                      EmploymentCol=employmentcol)
 
 
 class TestEmploymentResource:
@@ -26,7 +30,7 @@ class TestEmploymentResource:
             results = client.get(f"/api/{BASE_ROUTE}", follow_redirects=True).get_json()
             expected = (
                 EmploymentSchema(many=True)
-                .dump(
+                    .dump(
                     [
                         make_employment(),
                         make_employment(EmployeeID=20),
@@ -42,12 +46,14 @@ class TestEmploymentResource:
     )
     def test_post(self, client: FlaskClient):  # noqa
         with client:
-
-            payload = dict(PersonId=1, HRJobId=1, ManagerEmployeeId=1, StartDate="test", EndDate="test", Salary="test", CommissionPercent=1, EmploymentCol="test")
+            payload = dict(PersonId=1, HRJobId=1, ManagerEmployeeId=1, StartDate="test", EndDate="test", Salary="test",
+                           CommissionPercent=1, EmploymentCol="test")
             result = client.post(f"/api/{BASE_ROUTE}/", json=payload).get_json()
             expected = (
                 EmploymentSchema()
-                .dump(Employment(PersonId=payload[1], HRJobId=payload[1], ManagerEmployeeId=payload[1], StartDate=payload["test"], EndDate=payload["test"], Salary=payload["test"], CommissionPercent=payload[1], EmploymentCol=payload["test"]))
+                    .dump(Employment(PersonId=payload[1], HRJobId=payload[1], ManagerEmployeeId=payload[1],
+                                     StartDate=payload["test"], EndDate=payload["test"], Salary=payload["test"],
+                                     CommissionPercent=payload[1], EmploymentCol=payload["test"]))
 
             )
             assert result == expected
@@ -68,4 +74,3 @@ class TestEmploymentIdResource:
             result = client.delete(f"/api/{BASE_ROUTE}/123").get_json()
             expected = dict(status="Success", id=123)
             assert result == expected
-

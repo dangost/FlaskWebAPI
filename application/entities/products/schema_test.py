@@ -1,8 +1,8 @@
 from pytest import fixture
 
+from .interface import ProductInterface
 from .model import Product
 from .schema import ProductSchema
-from .interface import ProductInterface
 
 
 @fixture
@@ -16,7 +16,9 @@ def test_ProductSchema_create(schema: ProductSchema):
 
 def test_ProductSchema_works(schema: ProductSchema):
     params: ProductInterface = schema.load(
-        {"ProductName": "test", "Description": "test", "Category": 1, "WeightClass": "test", "WarrantyPeriod": 1, "SupplierId": 1, "Status": "test", "ListPrice": 1, "MinimumPrice": 1, "PriceCurrency": "test", "CatalogURL": "test"}
+        {"ProductName": "test", "Description": "test", "Category": 1, "WeightClass": "test", "WarrantyPeriod": 1,
+         "SupplierId": 1, "Status": "test", "ListPrice": 1, "MinimumPrice": 1, "PriceCurrency": "test",
+         "CatalogURL": "test"}
     )
     product = Product(**params)
 
@@ -31,5 +33,3 @@ def test_ProductSchema_works(schema: ProductSchema):
     assert product.MinimumPrice == 1
     assert product.PriceCurrency == "test"
     assert product.CatalogURL == "test"
-
-

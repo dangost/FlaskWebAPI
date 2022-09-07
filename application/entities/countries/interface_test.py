@@ -1,6 +1,7 @@
 from pytest import fixture
-from .model import Country
+
 from .interface import CountryInterface
+from .model import Country
 
 
 @fixture
@@ -15,4 +16,3 @@ def test_CountryInterface_create(interface: CountryInterface):
 def test_CountryInterface_works(interface: CountryInterface):
     country = Country(**interface)
     assert country
-

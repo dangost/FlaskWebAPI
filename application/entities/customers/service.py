@@ -1,7 +1,8 @@
-from application import db
 from typing import List
-from .model import Customer
+
+from application import db
 from .interface import CustomerInterface
+from .model import Customer
 
 
 class CustomersService:
@@ -25,9 +26,10 @@ class CustomersService:
         return [customer_id]
 
     def create(self, new_attrs: CustomerInterface) -> Customer:
-        new_customer = Customer(CustomerId=new_attrs["CustomerId"],  PersonId=new_attrs["PersonId"],  CustomEmployeeId=new_attrs["CustomEmployeeId"],  AccountMgrId=new_attrs["AccountMgrId"],  IncomeLevel=new_attrs["IncomeLevel"])
+        new_customer = Customer(CustomerId=new_attrs["CustomerId"], PersonId=new_attrs["PersonId"],
+                                CustomEmployeeId=new_attrs["CustomEmployeeId"], AccountMgrId=new_attrs["AccountMgrId"],
+                                IncomeLevel=new_attrs["IncomeLevel"])
         db.session.add(new_customer)
         db.session.commit()
 
         return new_customer
-

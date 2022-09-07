@@ -1,24 +1,24 @@
 from flask import request
+from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
-from flask.wrappers import Response
 from typing import List
 
+from .interface import InventoryInterface
+from .model import Inventory
 from .schema import InventorySchema
 from .service import InventoriesService
-from .model import Inventory
-from .interface import InventoryInterface
 
 api = Namespace("Inventory", description="Single namespace, single entity")
 
 service = InventoriesService
+
 
 @api.route("/")
 class InventoryResource(Resource):
 
     @responds(schema=InventorySchema(many=True))
     def get(self) -> List[Inventory]:
-        
         return service.get_all(self)
 
     @accepts(schema=InventorySchema, api=api)
@@ -44,8 +44,6 @@ class InventoryIdResource(Resource):
     @accepts(schema=InventorySchema, api=api)
     @responds(schema=InventorySchema)
     def put(self, InventoryId: int) -> Inventory:
-
         changes: InventoryInterface = request.parsed_obj
         inventory = service.get_by_id(self, InventoryId)
         return service.update(self, inventory, changes)
-

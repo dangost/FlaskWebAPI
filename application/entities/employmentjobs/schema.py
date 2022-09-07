@@ -11,6 +11,3 @@ class EmploymentJobsSchema(Schema):
     MinSalary = fields.Integer(attribute="MinSalary")
 
     MaxSalary = fields.Integer(attribute="MaxSalary")
-
-
-

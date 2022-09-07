@@ -1,8 +1,8 @@
 from pytest import fixture
 
+from .interface import OrdersInterface
 from .model import Orders
 from .schema import OrdersSchema
-from .interface import OrdersInterface
 
 
 @fixture
@@ -16,7 +16,8 @@ def test_OrdersSchema_create(schema: OrdersSchema):
 
 def test_OrdersSchema_works(schema: OrdersSchema):
     params: OrdersInterface = schema.load(
-        {"CustomerId": 1, "SalesRepId": 1, "OrderDate": "test", "OrderCode": "test", "OrderStatus": "test", "OrderTotal": 1, "OrderCurrency": "test", "PromotionCode": "test"}
+        {"CustomerId": 1, "SalesRepId": 1, "OrderDate": "test", "OrderCode": "test", "OrderStatus": "test",
+         "OrderTotal": 1, "OrderCurrency": "test", "PromotionCode": "test"}
     )
     orders = Orders(**params)
 
@@ -28,5 +29,3 @@ def test_OrdersSchema_works(schema: OrdersSchema):
     assert orders.OrderTotal == 1
     assert orders.OrderCurrency == "test"
     assert orders.PromotionCode == "test"
-
-

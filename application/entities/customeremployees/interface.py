@@ -15,6 +15,3 @@ class CustomerEmployeeInterface(TypedDict, total=False):
     CreditLimit: int
 
     CreditLimitCurrency: int
-
-
-

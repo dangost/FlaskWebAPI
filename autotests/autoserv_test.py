@@ -5,7 +5,8 @@ list_names = ["Countries", "Customers", "CustomerCompanies", "CustomerEmployees"
               "Inventories", "Locations", "OrderItems", "Orders", "People", "PersonLocations", "PhoneNumbers",
               "Products", "RestrictedInfo", "Warehouses"]
 id_names = ["CountryId", "CustomerId", "CompanyId", "CustomerEmployeeId", "EmployeeID", "HRJobId", "InventoryId",
-            "LocationId", "OrderItemId", "OrderId", "Id", "PeoplePersonId", "PhoneNumberId", "ProductId", "PersonId", "WarehouseId"]
+            "LocationId", "OrderItemId", "OrderId", "Id", "PeoplePersonId", "PhoneNumberId", "ProductId", "PersonId",
+            "WarehouseId"]
 base_with_id = [
     {"CountryId": "int", "CountryName": "string", "CountryCode": "string", "NatLangCode": "int",
      "CurrencyCode": "string"},
@@ -45,8 +46,6 @@ base_with_id = [
     {"WarehouseId": "int", "LocationId": "int", "WarehouseName": "string"}
 ]
 
-
-
 base = [
     {"CountryName": "string", "CountryCode": "string", "NatLangCode": "int", "CurrencyCode": "string"},
     {"CustomerId": "int", "PersonId": "int", "CustomEmployeeId": "int", "AccountMgrId": "int", "IncomeLevel": "int"},
@@ -65,13 +64,15 @@ base = [
      "OrderTotal": "int", "OrderCurrency": "string", "PromotionCode": "string"},
     {"FirstName": "string", "LastName": "string", "MiddleName": "string", "Nickname": "string", "NatLangCode": "int",
      "CultureCode": "int", "Gender": "string"},
-    {"PeoplePersonId": "int", "LocationsLocationsId": "int", "SubAddress": "string", "LocationUsage": "string", "Notes": "string"},
+    {"PeoplePersonId": "int", "LocationsLocationsId": "int", "SubAddress": "string", "LocationUsage": "string",
+     "Notes": "string"},
     {"PeoplePersonId": "int", "LocationLocationId": "int", "PhoneNumber": "int", "CountryCode": "int",
      "PhoneType": "int"},
     {"ProductName": "string", "Description": "string", "Category": "int", "WeightClass": "string",
      "WarrantyPeriod": "int", "SupplierId": "int", "Status": "string", "ListPrice": "int", "MinimumPrice": "int",
      "PriceCurrency": "string", "CatalogURL": "string"},
-    {"PersonId": "int", "DateOfBirth": "string", "DateOfDeath": "string", "GovernmentId": "string", "PassportId": "string",
+    {"PersonId": "int", "DateOfBirth": "string", "DateOfDeath": "string", "GovernmentId": "string",
+     "PassportId": "string",
      "HireDire": "string", "SeniorityCode": "int"},
     {"WarehouseId": "int", "LocationId": "int", "WarehouseName": "string"}
 ]
@@ -79,6 +80,7 @@ base = [
 path = r"D:\Projects\Regula\Web\FlaskWebAPI\application\entities"
 
 import os
+
 for i in range(len(class_names)):
     '''widget_id=1, name="Yin", purpose="thing 1"'''
     t = ""
@@ -89,14 +91,14 @@ for i in range(len(class_names)):
             var1 = "=16, "
         else:
             var1 = "=\"test16\", "
-        t += each+var1
+        t += each + var1
 
     for each in base_with_id[i]:
         if base_with_id[i].get(each) == "int":
             var1 = "=1, "
         else:
             var = "=\"test\", "
-        t1 += each+var1
+        t1 += each + var1
         pass
     t12 = ""
     for each in base[i]:
@@ -104,10 +106,9 @@ for i in range(len(class_names)):
             var1 = "=1, "
         else:
             var1 = "=\"test\", "
-        t12 += each+var1
+        t12 += each + var1
         break
         pass
-
 
     folder_path = path + "\\" + list_names[i].lower()
 
@@ -115,42 +116,42 @@ for i in range(len(class_names)):
         os.mkdir(folder_path)
     except BaseException:
         pass
-    new_path = folder_path+"\\service_test.py"
+    new_path = folder_path + "\\service_test.py"
     file = open(new_path, 'w')
 
     '''(CountryName=new_attrs["CountryName"], ... )'''
 
     temp = '''from flask_sqlalchemy import SQLAlchemy
 from typing import List
-from .model import '''+class_names[i]+'''
-from .service import '''+list_names[i]+'''Service  # noqa
-from .interface import '''+class_names[i]+'''Interface
+from .model import ''' + class_names[i] + '''
+from .service import ''' + list_names[i] + '''Service  # noqa
+from .interface import ''' + class_names[i] + '''Interface
 
 
 def test_get_all(db: SQLAlchemy):  # noqa
-    yin: '''+class_names[i]+''' = '''+class_names[i]+'''('''+t[0:-2]+''')
-    yang: '''+class_names[i]+''' = '''+class_names[i]+'''('''+t[0:-2]+''')
+    yin: ''' + class_names[i] + ''' = ''' + class_names[i] + '''(''' + t[0:-2] + ''')
+    yang: ''' + class_names[i] + ''' = ''' + class_names[i] + '''(''' + t[0:-2] + ''')
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
 
-    results: List['''+class_names[i]+'''] = '''+list_names[i]+'''Service.get_all()
+    results: List[''' + class_names[i] + '''] = ''' + list_names[i] + '''Service.get_all()
 
     assert len(results) == 2
     assert yin in results and yang in results
 
 
 def test_delete_by_id(db: SQLAlchemy):  # noqa
-    yin: '''+class_names[i]+''' = '''+class_names[i]+'''('''+t[0:-2]+''')
-    yang: '''+class_names[i]+''' = '''+class_names[i]+'''('''+t[0:-2]+''')
+    yin: ''' + class_names[i] + ''' = ''' + class_names[i] + '''(''' + t[0:-2] + ''')
+    yang: ''' + class_names[i] + ''' = ''' + class_names[i] + '''(''' + t[0:-2] + ''')
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
 
-    '''+list_names[i]+'''Service.delete_by_id(1)
+    ''' + list_names[i] + '''Service.delete_by_id(1)
     db.session.commit()
 
-    results: List['''+class_names[i]+'''] = '''+class_names[i]+'''.query.all()
+    results: List[''' + class_names[i] + '''] = ''' + class_names[i] + '''.query.all()
 
     assert len(results) == 1
     assert yin not in results and yang in results
@@ -158,9 +159,9 @@ def test_delete_by_id(db: SQLAlchemy):  # noqa
 
 def test_create(db: SQLAlchemy):  # noqa
 
-    yin: '''+class_names[i]+'''Interface = dict('''+t12[0:-2]+''')
-    '''+list_names[i]+'''Service.create(yin)
-    results: List['''+class_names[i]+'''] = '''+class_names[i]+'''.query.all()
+    yin: ''' + class_names[i] + '''Interface = dict(''' + t12[0:-2] + ''')
+    ''' + list_names[i] + '''Service.create(yin)
+    results: List[''' + class_names[i] + '''] = ''' + class_names[i] + '''.query.all()
 
     assert len(results) == 1
 

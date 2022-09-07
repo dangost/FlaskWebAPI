@@ -11,6 +11,3 @@ class InventoryInterface(TypedDict, total=False):
     QuantityOnHand: int
 
     QuantityAvailable: int
-
-
-

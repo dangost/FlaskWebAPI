@@ -11,6 +11,3 @@ class CountryInterface(TypedDict, total=False):
     NatLangCode: int
 
     CurrencyCode: str
-
-
-

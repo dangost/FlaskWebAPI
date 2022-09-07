@@ -1,24 +1,24 @@
 from flask import request
+from flask.wrappers import Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
-from flask.wrappers import Response
 from typing import List
 
+from .interface import EmploymentJobsInterface
+from .model import EmploymentJobs
 from .schema import EmploymentJobsSchema
 from .service import EmploymentJobsService
-from .model import EmploymentJobs
-from .interface import EmploymentJobsInterface
 
 api = Namespace("EmploymentJobs", description="Single namespace, single entity")
 
 service = EmploymentJobsService
+
 
 @api.route("/")
 class EmploymentJobsResource(Resource):
 
     @responds(schema=EmploymentJobsSchema(many=True))
     def get(self) -> List[EmploymentJobs]:
-        
         return service.get_all(self)
 
     @accepts(schema=EmploymentJobsSchema, api=api)
@@ -44,8 +44,6 @@ class EmploymentJobsIdResource(Resource):
     @accepts(schema=EmploymentJobsSchema, api=api)
     @responds(schema=EmploymentJobsSchema)
     def put(self, HRJobId: int) -> EmploymentJobs:
-
         changes: EmploymentJobsInterface = request.parsed_obj
         employmentjobs = service.get_by_id(self, HRJobId)
         return service.update(self, employmentjobs, changes)
-

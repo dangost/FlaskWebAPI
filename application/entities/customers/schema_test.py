@@ -1,8 +1,8 @@
 from pytest import fixture
 
+from .interface import CustomerInterface
 from .model import Customer
 from .schema import CustomerSchema
-from .interface import CustomerInterface
 
 
 @fixture
@@ -25,5 +25,3 @@ def test_CustomerSchema_works(schema: CustomerSchema):
     assert customer.CustomEmployeeId == 1
     assert customer.AccountMgrId == 1
     assert customer.IncomeLevel == 1
-
-

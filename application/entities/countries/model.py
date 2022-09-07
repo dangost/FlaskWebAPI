@@ -1,10 +1,10 @@
 from sqlalchemy import Integer, Column, String, ForeignKey
+
 from application import db
 from .interface import CountryInterface
 
 
 class Country(db.Model):
-
     __tablename__ = "Countries"
 
     CountryId = Column(Integer(), primary_key=True)
@@ -13,12 +13,8 @@ class Country(db.Model):
     NatLangCode = Column(Integer())
     CurrencyCode = Column(String(255))
 
-
     def update(self, changes: CountryInterface):
         for key, val in changes.items():
             setattr(self, key, val)
 
         return self
-
-
-

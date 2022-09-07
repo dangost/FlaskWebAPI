@@ -1,13 +1,17 @@
 from flask_sqlalchemy import SQLAlchemy
 from typing import List
+
+from .interface import RestrictedInfoInterface
 from .model import RestrictedInfo
 from .service import RestrictedInfoService  # noqa
-from .interface import RestrictedInfoInterface
 
 
 def test_get_all(db: SQLAlchemy):  # noqa
-    yin: RestrictedInfo = RestrictedInfo(PersonId=16, DateOfBirth="test16", DateOfDeath="test16", GovernmentId="test16", PassportId="test16", HireDire="test16", SeniorityCode=16)
-    yang: RestrictedInfo = RestrictedInfo(PersonId=16, DateOfBirth="test16", DateOfDeath="test16", GovernmentId="test16", PassportId="test16", HireDire="test16", SeniorityCode=16)
+    yin: RestrictedInfo = RestrictedInfo(PersonId=16, DateOfBirth="test16", DateOfDeath="test16", GovernmentId="test16",
+                                         PassportId="test16", HireDire="test16", SeniorityCode=16)
+    yang: RestrictedInfo = RestrictedInfo(PersonId=16, DateOfBirth="test16", DateOfDeath="test16",
+                                          GovernmentId="test16", PassportId="test16", HireDire="test16",
+                                          SeniorityCode=16)
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -19,8 +23,11 @@ def test_get_all(db: SQLAlchemy):  # noqa
 
 
 def test_delete_by_id(db: SQLAlchemy):  # noqa
-    yin: RestrictedInfo = RestrictedInfo(PersonId=16, DateOfBirth="test16", DateOfDeath="test16", GovernmentId="test16", PassportId="test16", HireDire="test16", SeniorityCode=16)
-    yang: RestrictedInfo = RestrictedInfo(PersonId=16, DateOfBirth="test16", DateOfDeath="test16", GovernmentId="test16", PassportId="test16", HireDire="test16", SeniorityCode=16)
+    yin: RestrictedInfo = RestrictedInfo(PersonId=16, DateOfBirth="test16", DateOfDeath="test16", GovernmentId="test16",
+                                         PassportId="test16", HireDire="test16", SeniorityCode=16)
+    yang: RestrictedInfo = RestrictedInfo(PersonId=16, DateOfBirth="test16", DateOfDeath="test16",
+                                          GovernmentId="test16", PassportId="test16", HireDire="test16",
+                                          SeniorityCode=16)
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -44,5 +51,3 @@ def test_create(db: SQLAlchemy):  # noqa
 
     for k in yin.keys():
         assert getattr(results[0], k) == yin[k]
-
-

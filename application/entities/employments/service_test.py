@@ -1,13 +1,16 @@
 from flask_sqlalchemy import SQLAlchemy
 from typing import List
+
+from .interface import EmploymentInterface
 from .model import Employment
 from .service import EmploymentsService  # noqa
-from .interface import EmploymentInterface
 
 
 def test_get_all(db: SQLAlchemy):  # noqa
-    yin: Employment = Employment(EmployeeId=16, PersonId=16, HRJobId=16, ManagerEmployeeId=16, StartDate="test16", EndDate="test16", Salary="test16", CommissionPercent=16, EmploymentCol="test16")
-    yang: Employment = Employment(EmployeeId=16, PersonId=16, HRJobId=16, ManagerEmployeeId=16, StartDate="test16", EndDate="test16", Salary="test16", CommissionPercent=16, EmploymentCol="test16")
+    yin: Employment = Employment(EmployeeId=16, PersonId=16, HRJobId=16, ManagerEmployeeId=16, StartDate="test16",
+                                 EndDate="test16", Salary="test16", CommissionPercent=16, EmploymentCol="test16")
+    yang: Employment = Employment(EmployeeId=16, PersonId=16, HRJobId=16, ManagerEmployeeId=16, StartDate="test16",
+                                  EndDate="test16", Salary="test16", CommissionPercent=16, EmploymentCol="test16")
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -19,8 +22,10 @@ def test_get_all(db: SQLAlchemy):  # noqa
 
 
 def test_delete_by_id(db: SQLAlchemy):  # noqa
-    yin: Employment = Employment(EmployeeId=16, PersonId=16, HRJobId=16, ManagerEmployeeId=16, StartDate="test16", EndDate="test16", Salary="test16", CommissionPercent=16, EmploymentCol="test16")
-    yang: Employment = Employment(EmployeeId=16, PersonId=16, HRJobId=16, ManagerEmployeeId=16, StartDate="test16", EndDate="test16", Salary="test16", CommissionPercent=16, EmploymentCol="test16")
+    yin: Employment = Employment(EmployeeId=16, PersonId=16, HRJobId=16, ManagerEmployeeId=16, StartDate="test16",
+                                 EndDate="test16", Salary="test16", CommissionPercent=16, EmploymentCol="test16")
+    yang: Employment = Employment(EmployeeId=16, PersonId=16, HRJobId=16, ManagerEmployeeId=16, StartDate="test16",
+                                  EndDate="test16", Salary="test16", CommissionPercent=16, EmploymentCol="test16")
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -44,5 +49,3 @@ def test_create(db: SQLAlchemy):  # noqa
 
     for k in yin.keys():
         assert getattr(results[0], k) == yin[k]
-
-

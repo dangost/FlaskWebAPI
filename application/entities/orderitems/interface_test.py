@@ -1,6 +1,7 @@
 from pytest import fixture
-from .model import OrderItem
+
 from .interface import OrderItemInterface
+from .model import OrderItem
 
 
 @fixture
@@ -15,4 +16,3 @@ def test_OrderItemInterface_create(interface: OrderItemInterface):
 def test_OrderItemInterface_works(interface: OrderItemInterface):
     orderitem = OrderItem(**interface)
     assert orderitem
-

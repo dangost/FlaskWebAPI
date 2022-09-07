@@ -9,6 +9,3 @@ class CustomerCompanySchema(Schema):
     CompanyCreditLimit = fields.String(attribute="CompanyCreditLimit")
 
     CreditLimitCurrency = fields.String(attribute="CreditLimitCurrency")
-
-
-

@@ -25,6 +25,3 @@ class ProductInterface(TypedDict, total=False):
     PriceCurrency: str
 
     CatalogURL: str
-
-
-

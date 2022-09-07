@@ -1,5 +1,6 @@
-from pytest import fixture
 from flask_sqlalchemy import SQLAlchemy
+from pytest import fixture
+
 from application.test.fixtures import app, db  # noqa
 from .model import Warehouse
 
@@ -18,4 +19,3 @@ def test_Warehouse_retrieve(warehouse: Warehouse, db: SQLAlchemy):  # noqa
     db.session.commit()
     s = Warehouse.query.first()
     assert s.__dict__ == warehouse.__dict__
-

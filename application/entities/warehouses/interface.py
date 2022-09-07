@@ -7,6 +7,3 @@ class WarehouseInterface(TypedDict, total=False):
     LocationId: int
 
     WarehouseName: str
-
-
-

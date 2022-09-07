@@ -1,7 +1,8 @@
-from application import db
 from typing import List
-from .model import Warehouse
+
+from application import db
 from .interface import WarehouseInterface
+from .model import Warehouse
 
 
 class WarehousesService:
@@ -25,9 +26,9 @@ class WarehousesService:
         return [warehouse_id]
 
     def create(self, new_attrs: WarehouseInterface) -> Warehouse:
-        new_warehouse = Warehouse(WarehouseId=new_attrs["WarehouseId"],  LocationId=new_attrs["LocationId"],  WarehouseName=new_attrs["WarehouseName"])
+        new_warehouse = Warehouse(WarehouseId=new_attrs["WarehouseId"], LocationId=new_attrs["LocationId"],
+                                  WarehouseName=new_attrs["WarehouseName"])
         db.session.add(new_warehouse)
         db.session.commit()
 
         return new_warehouse
-

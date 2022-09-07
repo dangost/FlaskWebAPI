@@ -11,6 +11,3 @@ class PersonLocationSchema(Schema):
     LocationUsage = fields.String(attribute="LocationUsage")
 
     Notes = fields.String(attribute="Notes")
-
-
-

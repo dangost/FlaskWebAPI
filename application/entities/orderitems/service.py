@@ -1,7 +1,8 @@
-from application import db
 from typing import List
-from .model import OrderItem
+
+from application import db
 from .interface import OrderItemInterface
+from .model import OrderItem
 
 
 class OrderItemsService:
@@ -25,9 +26,9 @@ class OrderItemsService:
         return [orderitem_id]
 
     def create(self, new_attrs: OrderItemInterface) -> OrderItem:
-        new_orderitem = OrderItem(OrderId=new_attrs["OrderId"],  ProductId=new_attrs["ProductId"],  UnitPrice=new_attrs["UnitPrice"],  Quantity=new_attrs["Quantity"])
+        new_orderitem = OrderItem(OrderId=new_attrs["OrderId"], ProductId=new_attrs["ProductId"],
+                                  UnitPrice=new_attrs["UnitPrice"], Quantity=new_attrs["Quantity"])
         db.session.add(new_orderitem)
         db.session.commit()
 
         return new_orderitem
-

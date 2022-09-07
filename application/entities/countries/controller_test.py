@@ -1,15 +1,18 @@
-from unittest.mock import patch
 from flask.testing import FlaskClient
-from .service import CountriesService
-from .schema import CountrySchema
-from .model import Country
+from unittest.mock import patch
+
 from . import BASE_ROUTE
+from .model import Country
+from .schema import CountrySchema
+from .service import CountriesService
 
 
 def make_country(
-    countryid: int = 1, countryname:str = "test", countrycode:str = "test", natlangcode: int = 1, currencycode:str = "test"
+        countryid: int = 1, countryname: str = "test", countrycode: str = "test", natlangcode: int = 1,
+        currencycode: str = "test"
 ) -> Country:
-    return Country(CountryId=countryid, CountryName=countryname, CountryCode=countrycode, NatLangCode=natlangcode, CurrencyCode=currencycode)
+    return Country(CountryId=countryid, CountryName=countryname, CountryCode=countrycode, NatLangCode=natlangcode,
+                   CurrencyCode=currencycode)
 
 
 class TestCountryResource:
@@ -26,7 +29,7 @@ class TestCountryResource:
             results = client.get(f"/api/{BASE_ROUTE}", follow_redirects=True).get_json()
             expected = (
                 CountrySchema(many=True)
-                .dump(
+                    .dump(
                     [
                         make_country(),
                         make_country(CountryId=20),
@@ -42,12 +45,12 @@ class TestCountryResource:
     )
     def test_post(self, client: FlaskClient):  # noqa
         with client:
-
             payload = dict(CountryName="test", CountryCode="test", NatLangCode=1, CurrencyCode="test")
             result = client.post(f"/api/{BASE_ROUTE}/", json=payload).get_json()
             expected = (
                 CountrySchema()
-                .dump(Country(CountryName=payload["test"], CountryCode=payload["test"], NatLangCode=payload[1], CurrencyCode=payload["test"]))
+                    .dump(Country(CountryName=payload["test"], CountryCode=payload["test"], NatLangCode=payload[1],
+                                  CurrencyCode=payload["test"]))
 
             )
             assert result == expected
@@ -68,4 +71,3 @@ class TestCountryIdResource:
             result = client.delete(f"/api/{BASE_ROUTE}/123").get_json()
             expected = dict(status="Success", id=123)
             assert result == expected
-

@@ -1,13 +1,16 @@
 from flask_sqlalchemy import SQLAlchemy
 from typing import List
+
+from .interface import OrdersInterface
 from .model import Orders
 from .service import OrdersService  # noqa
-from .interface import OrdersInterface
 
 
 def test_get_all(db: SQLAlchemy):  # noqa
-    yin: Orders = Orders(OrderId=16, CustomerId=16, SalesRepId=16, OrderDate="test16", OrderCode="test16", OrderStatus="test16", OrderTotal=16, OrderCurrency="test16", PromotionCode="test16")
-    yang: Orders = Orders(OrderId=16, CustomerId=16, SalesRepId=16, OrderDate="test16", OrderCode="test16", OrderStatus="test16", OrderTotal=16, OrderCurrency="test16", PromotionCode="test16")
+    yin: Orders = Orders(OrderId=16, CustomerId=16, SalesRepId=16, OrderDate="test16", OrderCode="test16",
+                         OrderStatus="test16", OrderTotal=16, OrderCurrency="test16", PromotionCode="test16")
+    yang: Orders = Orders(OrderId=16, CustomerId=16, SalesRepId=16, OrderDate="test16", OrderCode="test16",
+                          OrderStatus="test16", OrderTotal=16, OrderCurrency="test16", PromotionCode="test16")
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -19,8 +22,10 @@ def test_get_all(db: SQLAlchemy):  # noqa
 
 
 def test_delete_by_id(db: SQLAlchemy):  # noqa
-    yin: Orders = Orders(OrderId=16, CustomerId=16, SalesRepId=16, OrderDate="test16", OrderCode="test16", OrderStatus="test16", OrderTotal=16, OrderCurrency="test16", PromotionCode="test16")
-    yang: Orders = Orders(OrderId=16, CustomerId=16, SalesRepId=16, OrderDate="test16", OrderCode="test16", OrderStatus="test16", OrderTotal=16, OrderCurrency="test16", PromotionCode="test16")
+    yin: Orders = Orders(OrderId=16, CustomerId=16, SalesRepId=16, OrderDate="test16", OrderCode="test16",
+                         OrderStatus="test16", OrderTotal=16, OrderCurrency="test16", PromotionCode="test16")
+    yang: Orders = Orders(OrderId=16, CustomerId=16, SalesRepId=16, OrderDate="test16", OrderCode="test16",
+                          OrderStatus="test16", OrderTotal=16, OrderCurrency="test16", PromotionCode="test16")
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -44,5 +49,3 @@ def test_create(db: SQLAlchemy):  # noqa
 
     for k in yin.keys():
         assert getattr(results[0], k) == yin[k]
-
-

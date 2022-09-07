@@ -1,10 +1,10 @@
 from sqlalchemy import Integer, Column, String, ForeignKey
+
 from application import db
 from .interface import PersonInterface
 
 
 class Person(db.Model):
-
     __tablename__ = "People"
 
     PersonId = Column(Integer(), primary_key=True)
@@ -16,12 +16,8 @@ class Person(db.Model):
     CultureCode = Column(Integer())
     Gender = Column(String(255))
 
-
     def update(self, changes: PersonInterface):
         for key, val in changes.items():
             setattr(self, key, val)
 
         return self
-
-
-

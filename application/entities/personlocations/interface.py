@@ -11,6 +11,3 @@ class PersonLocationInterface(TypedDict, total=False):
     LocationUsage: str
 
     Notes: str
-
-
-

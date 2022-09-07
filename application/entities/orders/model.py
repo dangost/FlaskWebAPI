@@ -1,10 +1,10 @@
 from sqlalchemy import Integer, Column, String, ForeignKey
+
 from application import db
 from .interface import OrdersInterface
 
 
 class Orders(db.Model):
-
     __tablename__ = "Orders"
 
     OrderId = Column(Integer(), primary_key=True)
@@ -17,12 +17,8 @@ class Orders(db.Model):
     OrderCurrency = Column(String(255))
     PromotionCode = Column(String(255))
 
-
     def update(self, changes: OrdersInterface):
         for key, val in changes.items():
             setattr(self, key, val)
 
         return self
-
-
-

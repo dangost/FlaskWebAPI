@@ -5,7 +5,8 @@ list_names = ["Countries", "Customers", "CustomerCompanies", "CustomerEmployees"
               "Inventories", "Locations", "OrderItems", "Orders", "People", "PersonLocations", "PhoneNumbers",
               "Products", "RestrictedInfo", "Warehouses"]
 id_names = ["CountryId", "CustomerId", "CompanyId", "CustomerEmployeeId", "EmployeeID", "HRJobId", "InventoryId",
-            "LocationId", "OrderItemId", "OrderId", "Id", "PeoplePersonId", "PhoneNumberId", "ProductId", "PersonId", "WarehouseId"]
+            "LocationId", "OrderItemId", "OrderId", "Id", "PeoplePersonId", "PhoneNumberId", "ProductId", "PersonId",
+            "WarehouseId"]
 base = [
     {"CountryName": "string", "CountryCode": "string", "NatLangCode": "int", "CurrencyCode": "string"},
     {"CustomerId": "int", "PersonId": "int", "CustomEmployeeId": "int", "AccountMgrId": "int", "IncomeLevel": "int"},
@@ -24,13 +25,15 @@ base = [
      "OrderTotal": "int", "OrderCurrency": "string", "PromotionCode": "string"},
     {"FirstName": "string", "LastName": "string", "MiddleName": "string", "Nickname": "string", "NatLangCode": "int",
      "CultureCode": "int", "Gender": "string"},
-    {"PeoplePersonId": "int", "LocationsLocationsId": "int", "SubAddress": "string", "LocationUsage": "string", "Notes": "string"},
+    {"PeoplePersonId": "int", "LocationsLocationsId": "int", "SubAddress": "string", "LocationUsage": "string",
+     "Notes": "string"},
     {"PeoplePersonId": "int", "LocationLocationId": "int", "PhoneNumber": "int", "CountryCode": "int",
      "PhoneType": "int"},
     {"ProductName": "string", "Description": "string", "Category": "int", "WeightClass": "string",
      "WarrantyPeriod": "int", "SupplierId": "int", "Status": "string", "ListPrice": "int", "MinimumPrice": "int",
      "PriceCurrency": "string", "CatalogURL": "string"},
-    {"PersonId": "int", "DateOfBirth": "string", "DateOfDeath": "string", "GovernmentId": "string", "PassportId": "string",
+    {"PersonId": "int", "DateOfBirth": "string", "DateOfDeath": "string", "GovernmentId": "string",
+     "PassportId": "string",
      "HireDire": "string", "SeniorityCode": "int"},
     {"WarehouseId": "int", "LocationId": "int", "WarehouseName": "string"}
 ]
@@ -38,6 +41,7 @@ base = [
 path = r"D:\Projects\Regula\Web\FlaskWebAPI\application\entities"
 
 import os
+
 for i in range(len(class_names)):
 
     t = ""
@@ -47,9 +51,9 @@ for i in range(len(class_names)):
         ans = "1"
         if base[i].get(each) == "int":
             ans = "1"
-        else: ans = "\"test\""
-        asse+= "    assert "+class_names[i].lower()+"."+each+" == "+ans+"\n"
-
+        else:
+            ans = "\"test\""
+        asse += "    assert " + class_names[i].lower() + "." + each + " == " + ans + "\n"
 
         var = ""
         if base[i].get(each) == "int":
@@ -57,7 +61,7 @@ for i in range(len(class_names)):
         else:
             var = "\"test\""
         '''widget_id=1, name="Test widget", purpose="Test purpose"'''
-        t += "\""+each + "\": " + var + ", "
+        t += "\"" + each + "\": " + var + ", "
 
     '''CountryName = fields.String(attribute="CountryName")'''
     folder_path = path + "\\" + list_names[i].lower()
@@ -66,32 +70,32 @@ for i in range(len(class_names)):
         os.mkdir(folder_path)
     except BaseException:
         pass
-    new_path = folder_path+"\\schema_test.py"
+    new_path = folder_path + "\\schema_test.py"
     file = open(new_path, 'w')
 
     temp = '''from pytest import fixture
 
-from .model import '''+class_names[i]+'''
-from .schema import '''+class_names[i]+'''Schema
-from .interface import '''+class_names[i]+'''Interface
+from .model import ''' + class_names[i] + '''
+from .schema import ''' + class_names[i] + '''Schema
+from .interface import ''' + class_names[i] + '''Interface
 
 
 @fixture
-def schema() -> '''+class_names[i]+'''Schema:
-    return '''+class_names[i]+'''Schema()
+def schema() -> ''' + class_names[i] + '''Schema:
+    return ''' + class_names[i] + '''Schema()
 
 
-def test_'''+class_names[i]+'''Schema_create(schema: '''+class_names[i]+'''Schema):
+def test_''' + class_names[i] + '''Schema_create(schema: ''' + class_names[i] + '''Schema):
     assert schema
 
 
-def test_'''+class_names[i]+'''Schema_works(schema: '''+class_names[i]+'''Schema):
-    params: '''+class_names[i]+'''Interface = schema.load(
-        {'''+t[0:-2]+'''}
+def test_''' + class_names[i] + '''Schema_works(schema: ''' + class_names[i] + '''Schema):
+    params: ''' + class_names[i] + '''Interface = schema.load(
+        {''' + t[0:-2] + '''}
     )
-    '''+class_names[i].lower()+''' = '''+class_names[i]+'''(**params)
+    ''' + class_names[i].lower() + ''' = ''' + class_names[i] + '''(**params)
 
-'''+asse+'''
+''' + asse + '''
 
 '''
     file.write(temp)

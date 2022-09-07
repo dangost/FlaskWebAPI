@@ -25,6 +25,3 @@ class LocationSchema(Schema):
     ShippingNotes = fields.String(attribute="ShippingNotes")
 
     CountriesCountryId = fields.Integer(attribute="CountriesCountryId")
-
-
-

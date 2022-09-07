@@ -11,6 +11,3 @@ class InventorySchema(Schema):
     QuantityOnHand = fields.Integer(attribute="QuantityOnHand")
 
     QuantityAvailable = fields.Integer(attribute="QuantityAvailable")
-
-
-

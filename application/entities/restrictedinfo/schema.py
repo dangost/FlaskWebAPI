@@ -15,6 +15,3 @@ class RestrictedInfoSchema(Schema):
     HireDire = fields.String(attribute="HireDire")
 
     SeniorityCode = fields.Integer(attribute="SeniorityCode")
-
-
-
